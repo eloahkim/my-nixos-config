@@ -1,0 +1,21 @@
+# Esse módulo é designado para apenas importar todos os outros módulos que existem. Essa é uma maneira mais fácil de habilitar todos os módulos de uma vez, e também faz com que eles sejam alternáveis em algum nível.
+{ config, pkgs, inputs, ... }:
+
+{
+  imports = [
+      #./de-wm/gnome.nix # GNOME Desktop Environment.
+      ./de-wm/plasma.nix # KDE Plasma Desktop Environment.
+      ./network/firewall.nix # Configurações do firewall.
+      ./services/fhs.nix # Nix module que cria um pequeno ambiene FHS para executar binários.
+      ./services/flatpak.nix # Habilita e resolve flatpak.
+      ./services/gaming.nix # Tudo relacionado à jogos.
+      ./services/podman.nix # Habilita o podman.
+      ./virtualization/virt-manager.nix
+      ./system/shell.nix # Configurações do bash.
+      ./system/bluetooth.nix # Habilita o bluetooth quando é necessário.
+      ./system/pipewire.nix # Sistema de som.
+      ./apps/browser/firefox.nix
+      ./apps/git.nix # Git
+      #./apps/browser/ungoogled-chromium.nix # O navegador.
+    ];
+}
