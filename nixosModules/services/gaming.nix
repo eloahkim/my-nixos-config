@@ -11,7 +11,7 @@
 #     mangohud
 #     ];
 #
-#   programs.gamemode.enable = true;
+   programs.gamemode.enable = true;
 #   hardware.steam-hardware.enable = true;
 #
 #   hardware.graphics = {
