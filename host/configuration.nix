@@ -16,11 +16,6 @@
 
   # Sysrq
   boot.kernel.sysctl."kernel.sysrq" = 1;
-
-  # Desativar teclado defeituoso
-  services.udev.extraRules = ''
-  KERNEL=="event1", ATTRS{name}=="AT Translated Set 2 keyboard", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-  '';
   
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
