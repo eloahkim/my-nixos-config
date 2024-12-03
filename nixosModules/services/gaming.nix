@@ -20,9 +20,11 @@
    };
 
   environment.systemPackages = with pkgs; [
+    #dolphin-emu # Emulador de GameCube e Wii.
+    heroic
     lutris
+    #prismlauncher # Launcher de Minecraft.
     wineWowPackages.stable
     winetricks
-    heroic
   ];
 }
