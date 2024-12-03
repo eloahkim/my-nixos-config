@@ -9,6 +9,7 @@
       ./services/fhs.nix # Nix module que cria um pequeno ambiene FHS para executar binários.
       ./services/flatpak.nix # Habilita e resolve flatpak.
       ./services/gaming.nix # Tudo relacionado à jogos.
+      ./services/jellyfin.nix # Jellyfin, meu "streaming caseiro"
       ./services/podman.nix # Habilita o podman.
       ./virtualization/virt-manager.nix
       ./system/shell.nix # Configurações do bash.

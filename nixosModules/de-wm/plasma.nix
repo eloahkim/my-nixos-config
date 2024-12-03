@@ -18,6 +18,7 @@
     merkuro = true;
   };
   environment.systemPackages = with pkgs; [
+    kdePackages.calendarsupport
     kdePackages.filelight
     kdePackages.kcalc
     kdePackages.kate

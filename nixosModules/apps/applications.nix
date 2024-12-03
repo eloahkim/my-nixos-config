@@ -43,9 +43,10 @@
 
     # Web
     brave
-    #qbittorrent
+    qbittorrent
     #telegram-desktop
 
+    # Misc
     libreoffice-qt6-fresh
     dialect
 

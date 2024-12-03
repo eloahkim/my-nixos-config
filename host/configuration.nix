@@ -57,11 +57,6 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  # fonts. Por algum motivo, tive que duplicar a linha porquê o sistema não pega as fontes do "fix-flatpak.nix"
-  fonts.packages = with pkgs; [ noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-cjk-serif jetbrains-mono font-awesome
-  (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
-  fonts.fontDir.enable = true;
-
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "br";
