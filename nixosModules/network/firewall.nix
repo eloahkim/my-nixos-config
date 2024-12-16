@@ -6,4 +6,5 @@
    networking.firewall.allowedUDPPorts = [ 4533 8096 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+   services.avahi.enable = true;
 }
