@@ -9,42 +9,24 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.initrd.luks.devices ={
-    crypt = {
-      device = "/dev/disk/by-partuuid/65bc6727-113f-4ba8-9c4f-8021aebd89c5";
-      preLVM = true;
-    };
-  };
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a7086c06-8c2e-4584-94e0-497fc69e5fc2";
+    { device = "/dev/mapper/luks-5dc97b91-3189-481e-97a8-8d093342f2dd";
       fsType = "ext4";
     };
+
+  boot.initrd.luks.devices."luks-5dc97b91-3189-481e-97a8-8d093342f2dd".device = "/dev/disk/by-uuid/5dc97b91-3189-481e-97a8-8d093342f2dd";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1432-8225";
+    { device = "/dev/disk/by-uuid/D078-99DC";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-  fileSystems."/home/kim/Dados_externos" =
-    { device = "/dev/disk/by-uuid/db955229-d60e-4ada-88f0-4cdd2e3a2c13";
-      fsType = "ext4";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/1209832c-b38b-466c-b94c-e28d1cf033ec"; }
-    ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
+  swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -1,10 +1,21 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Open ports in the firewall.
-   networking.firewall.allowedTCPPorts = [ 4533 8096 ];
-   networking.firewall.allowedUDPPorts = [ 4533 8096 ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-   services.avahi.enable = true;
+  options.my-nixos.firewall.firewalld.enable = lib.mkEnableOption "Habilitar Firewalld como firewall";
+  config = lib.mkIf config.my-nixos.firewall.firewalld.enable {
+    #services.firewalld = {
+    #  enable = true;
+    #};
+
+    # Open ports in the firewall.
+    networking = {
+      firewall = {
+        enable = true;
+        allowedTCPPorts = [ 4533 8096 ];
+        allowedUDPPorts = [ 4533 8096 ];
+      };
+      nftables.enable = true;
+    };
+    services.avahi.enable = true;
+  };
 }

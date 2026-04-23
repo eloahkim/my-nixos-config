@@ -1,9 +1,12 @@
 # Minhas configurações do bash
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
-  programs.bash.shellAliases = {
-    neofetch-like = "fastfetch -c neofetch";
-    open = "xdg-open";
-    #nixos-upgrade = "./~/.nixos/nixos-upgrade.sh";
+  options.my-nixos.system.shell.enable = lib.mkEnableOption "Habilitar alias do shell (bash)";
+  config = lib.mkIf config.my-nixos.services.podman.enable {
+    programs.bash.shellAliases = {
+      neofetch-like = "fastfetch -c neofetch";
+      open = "xdg-open";
+      #nixos-upgrade = "./~/.nixos/nixos-upgrade.sh";
+    };
   };
 }

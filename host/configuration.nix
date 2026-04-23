@@ -82,18 +82,44 @@
     enable = true;
     #wlr.enable = true;
     xdgOpenUsePortal = true;
-    # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  # fwupd
-  services.fwupd.enable = true;
-
-  # power-profile-daemon
-  services.power-profiles-daemon.enable = true;
+  # Tuned
+  services.tuned = {
+    enable = true;
+    ppdSupport = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Desktop Modular
+  my-nixos = {
+    desktop = {
+      niri.enable = true;
+      noctalia.enable = true;
+      #plasma.enable = true;
+      #gnome.enable = true;
+    };
+    services = {
+      flatpak.enable = true;
+      #gaming.enable = true;
+      podman.enable = true;
+    };
+    #virt.virtmanager.enable = true;
+    system = {
+      bluetooth.enable = true;
+      keyboard.enable = true;
+      pipewire.enable = true;
+    };
+    apps = {
+      firefox.enable = true;
+      #ungoogled.enable = true;
+      general.enable = true;
+      git.enable = true;
+    };
+    firewall.firewalld.enable = true;
+  };
 
   # Enable the default ports on firewall.
   services.syncthing.openDefaultPorts = true;

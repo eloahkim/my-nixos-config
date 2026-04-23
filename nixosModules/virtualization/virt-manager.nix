@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
+  options.my-nixos.virt.virtmanager.enable = lib.mkEnableOption "Habilitar virt-manager qemu-kvm";
+  config = lib.mkIf config.my-nixos.virt.virtmanager.enable {
+    virtualisation.libvirtd.enable = true;
+    programs.virt-manager.enable = true;
+  };
 }
