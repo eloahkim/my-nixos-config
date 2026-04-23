@@ -60,7 +60,20 @@
                         "noatime"
                         "nodatacow"
                       ];
-                      swap.swapfile.size = "6144M";
+                    };
+                    "@containers" = {
+                      mountpoint = "/var/lib/containers";
+                      mountOptions = [
+                        "noatime"
+                        "nodatacow"
+                      ];
+                    };
+                    "@images" = {
+                      mountpoint = "/var/lib/libvirt/images";
+                      mountOptions = [
+                        "noatime"
+                        "nodatacow"
+                      ];
                     };
                   };
                 };

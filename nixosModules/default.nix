@@ -18,6 +18,7 @@
       ./system/bluetooth.nix # Habilita o bluetooth quando é necessário.
       ./system/keyboard.nix # Desativa o teclado defeituoso.
       ./system/pipewire.nix # Sistema de som.
+      ./system/zram.nix # zram
       ./apps/browser/firefox.nix
       ./apps/general.nix # Programas que uso em qualquer DE.
       ./apps/git.nix # Git
