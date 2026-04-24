@@ -119,6 +119,7 @@
       #ungoogled.enable = true;
       general.enable = true;
       git.enable = true;
+      vim.enable = true;
     };
     #firewall.firewalld.enable = true;
   };

@@ -22,6 +22,7 @@
       ./apps/browser/firefox.nix
       ./apps/general.nix # Programas que uso em qualquer DE.
       ./apps/git.nix # Git
+      ./apps/vim.nix # Vim
       ./apps/browser/ungoogled-chromium.nix # O navegador.
     ];
 }
