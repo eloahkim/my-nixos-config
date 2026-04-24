@@ -26,11 +26,11 @@
         modules = [
           # Isso faz com que o configuration.nix continue funcionando.
           ./host/configuration.nix
-          #./host/disko-config.nix
+          ./host/disko-config.nix
           ./nixosModules/default.nix
           # Módulo que corrige peculiaridades da minha máquina atual.
           nixos-hardware.nixosModules.lenovo-ideapad-s145-15api
-          #disko.nixosModules.disko
+          disko.nixosModules.disko
         ];
       };
     };

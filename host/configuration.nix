@@ -17,7 +17,7 @@
   # Sysrq
   boot.kernel.sysctl."kernel.sysrq" = 1;
   
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos-btw"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -104,6 +104,7 @@
     services = {
       flatpak.enable = true;
       #gaming.enable = true;
+      #jellyfin.enable = true;
       podman.enable = true;
     };
     #virt.virtmanager.enable = true;
@@ -119,7 +120,7 @@
       general.enable = true;
       git.enable = true;
     };
-    firewall.firewalld.enable = true;
+    #firewall.firewalld.enable = true;
   };
 
   # Enable the default ports on firewall.
