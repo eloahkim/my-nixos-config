@@ -39,7 +39,7 @@
       btop
       efibootmgr
       fastfetch
-      neovim
+      #neovim
       rclone
       rsync
       syncthing
