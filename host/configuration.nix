@@ -107,7 +107,9 @@
       #jellyfin.enable = true;
       podman.enable = true;
     };
-    #virt.virtmanager.enable = true;
+    # Virtualização
+    virt.virtmanager.enable = true;
+    # Coisas do sistema
     system = {
       bluetooth.enable = true;
       keyboard.enable = true;
@@ -121,7 +123,7 @@
       git.enable = true;
       vim.enable = true;
     };
-    #firewall.firewalld.enable = true;
+    firewall.firewalld.enable = true;
   };
 
   # Enable the default ports on firewall.

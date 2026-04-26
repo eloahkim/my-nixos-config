@@ -12,10 +12,12 @@
       firewall = {
         enable = true;
         allowedTCPPorts = [ 4533 8096 ];
-        allowedUDPPorts = [ 4533 8096 ];
+        allowedUDPPorts = [  ];
       };
       nftables.enable = true;
     };
-    services.avahi.enable = true;
+    services.avahi = {
+      enable = true;
+    };
   };
 }
