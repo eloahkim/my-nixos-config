@@ -20,6 +20,8 @@
       enable = true;
       enable32Bit = true;
     };
+    services.xserver.videoDrivers = [ "amdgpu" ];
+
 
     environment.systemPackages = with pkgs; [
       #dolphin-emu # Emulador de GameCube e Wii.

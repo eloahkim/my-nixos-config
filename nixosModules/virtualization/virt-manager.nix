@@ -5,5 +5,6 @@
   config = lib.mkIf config.my-nixos.virt.virtmanager.enable {
     virtualisation.libvirtd.enable = true;
     programs.virt-manager.enable = true;
+    networking.firewall.trustedInterfaces = [ "virbr0" ];
   };
 }
