@@ -2,8 +2,8 @@
   description = "Meu primeiro Nix Flake";
 
   inputs = {
-    # Fonte dos pacotes oficiais do NixOS, usando o branch nixos-25.11 aqui.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Fonte dos pacotes oficiais do NixOS, usando o branch nixos-26.05 aqui.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
     disko = {
@@ -12,7 +12,7 @@
     };
     # Noctalia
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
