@@ -17,7 +17,7 @@
   # Sysrq
   boot.kernel.sysctl."kernel.sysrq" = 1;
   
-  networking.hostName = "nixos-btw"; # Define your hostname.
+  networking.hostName = "lilith"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
