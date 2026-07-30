@@ -18,7 +18,7 @@
     # Mango
     mangowm = {
       url = "github:mangowm/mango/wl-only";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
