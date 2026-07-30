@@ -9,6 +9,7 @@
       ./de-wm/mango.nix # Mango
       ./de-wm/noctalia.nix # Noctalia
       ./network/firewall.nix # Configurações do firewall.
+      ./network/avahi.nix # Avahi (mDNS/Zeroconf)
       #./services/fhs.nix # Nix module que cria um pequeno ambiene FHS para executar binários.
       ./services/flatpak.nix # Habilita e resolve flatpak.
       ./services/gaming.nix # Tudo relacionado à jogos.

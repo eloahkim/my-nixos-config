@@ -80,7 +80,6 @@
   # xdg-portals
   xdg.portal = {
     enable = true;
-    #wlr.enable = true;
     xdgOpenUsePortal = true;
   };
 
@@ -99,17 +98,17 @@
       niri.enable = false;
       mango.enable = true;
       noctalia.enable = true;
-      #plasma.enable = true;
-      #gnome.enable = true;
+      plasma.enable = false;
+      gnome.enable = false;
     };
     services = {
       flatpak.enable = true;
       gaming.enable = true;
-      #jellyfin.enable = true;
+      jellyfin.enable = false;
       podman.enable = true;
     };
     # Virtualização
-    virt.virtmanager.enable = true;
+    virt.virtmanager.enable = false;
     # Coisas do sistema
     system = {
       bluetooth.enable = true;
@@ -124,7 +123,8 @@
       git.enable = true;
       vim.enable = true;
     };
-    firewall.firewalld.enable = true;
+    firewall.enable = false;
+    network.avahi.enable = true;
   };
 
   # Enable the default ports on firewall.
