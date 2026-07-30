@@ -96,7 +96,8 @@
   # Desktop Modular
   my-nixos = {
     desktop = {
-      niri.enable = true;
+      niri.enable = false;
+      mango.enable = true;
       noctalia.enable = true;
       #plasma.enable = true;
       #gnome.enable = true;

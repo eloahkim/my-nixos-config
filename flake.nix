@@ -15,9 +15,14 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # Mango
+    mangowm = {
+      url = "github:mangowm/mango/wl-only";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, mangowm, ... }@inputs: {
     # Aqui é necessário colocar o hostname da máquina.
     nixosConfigurations = {
       "nixos" = nixpkgs.lib.nixosSystem {

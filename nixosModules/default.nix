@@ -6,6 +6,7 @@
       ./de-wm/gnome.nix # GNOME Desktop Environment.
       ./de-wm/plasma.nix # KDE Plasma Desktop Environment.
       ./de-wm/niri.nix # Niri
+      ./de-wm/mango.nix # Mango
       ./de-wm/noctalia.nix # Noctalia
       ./network/firewall.nix # Configurações do firewall.
       #./services/fhs.nix # Nix module que cria um pequeno ambiene FHS para executar binários.
