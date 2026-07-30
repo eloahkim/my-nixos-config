@@ -10,7 +10,7 @@
       ./de-wm/noctalia.nix # Noctalia
       ./network/firewall.nix # Configurações do firewall.
       ./network/avahi.nix # Avahi (mDNS/Zeroconf)
-      #./services/fhs.nix # Nix module que cria um pequeno ambiene FHS para executar binários.
+      ./services/fhs.nix # Ambiente FHS para executar binários que esperam /usr/lib, /usr/bin, etc.
       ./services/flatpak.nix # Habilita e resolve flatpak.
       ./services/gaming.nix # Tudo relacionado à jogos.
       ./services/jellyfin.nix # Jellyfin, meu "streaming caseiro"

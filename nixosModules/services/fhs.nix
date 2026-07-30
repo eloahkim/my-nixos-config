@@ -1,32 +1,37 @@
 { config, pkgs, lib, ... }:
 
 {
-  # ......omit many configurations
+  options.my-nixos.services.fhs.enable = lib.mkEnableOption "Habilitar ambiente FHS";
 
-  environment.systemPackages = with pkgs; [
-    # ......omit many packages
+  config = lib.mkIf config.my-nixos.services.fhs.enable {
+    environment.systemPackages = with pkgs; [
+      (let base = appimageTools.defaultFhsEnvArgs; in
+      buildFHSEnv (base // {
+        name = "fhs";
 
-    # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
-    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-      pkgs.buildFHSUserEnv (base // {
-      name = "fhs";
-      targetPkgs = pkgs: (
-        # pkgs.buildFHSUserEnv provides only a minimal FHS environment,
-        # lacking many basic packages needed by most software.
-        # Therefore, we need to add them manually.
-        #
-        # pkgs.appimageTools provides basic packages required by most software.
-        (base.targetPkgs pkgs) ++ [
-          pkg-config
-          ncurses
-          # Feel free to add more packages here if needed.
-        ]
-      );
-      profile = "export FHS=1";
-      runScript = "bash";
-      extraOutputsToInstall = ["dev"];
-    }))
-  ];
+        targetPkgs = pkgs: (base.targetPkgs pkgs) ++ (with pkgs; [
+          # Rede
+          git wget curl cacert
+          # Compilação
+          gcc binutils gnumake
+          # Runtimes comuns
+          python3 nodejs
+          # Diagnóstico
+          file strace
+          # Utilidades já incluídas no original
+          pkg-config ncurses
+        ]);
 
-  # ......omit many configurations
+        multiPkgs = pkgs: base.multiPkgs pkgs;
+
+        profile = ''
+          export FHS=1
+          export LANG=C.UTF-8
+          export LC_ALL=C.UTF-8
+        '';
+
+        runScript = "bash";
+      }))
+    ];
+  };
 }

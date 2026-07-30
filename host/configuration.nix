@@ -106,6 +106,7 @@
       gaming.enable = true;
       jellyfin.enable = false;
       podman.enable = true;
+      fhs.enable = true;
     };
     # Virtualização
     virt.virtmanager.enable = false;
