@@ -123,7 +123,7 @@
       git.enable = true;
       vim.enable = true;
     };
-    firewall.enable = false;
+    firewall.enable = true;
     network.avahi.enable = true;
   };
 
