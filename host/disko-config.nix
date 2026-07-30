@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/ata-KINGSTON_SA400S37960G_50026B7785D222F5";
         content = {
           type = "gpt";
           partitions = {
@@ -22,13 +22,9 @@
               content = {
                 type = "luks";
                 name = "cryptroot";
-                # disable settings.keyFile if you want to use interactive password entry
-                passwordFile = "/tmp/secret.key"; # Interactive
                 settings = {
                   allowDiscards = true;
-                  #keyFile = "/tmp/secret.key";
                 };
-                #additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
