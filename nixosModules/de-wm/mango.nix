@@ -10,7 +10,13 @@
     programs.mango.enable = true;
     programs.dconf.enable = true;
 
-    services.displayManager.ly.enable = true;
+    services.displayManager.ly = {
+      enable = true;
+      settings = {
+        numlock = true;
+	animation = "matrix";
+      };
+    };
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.swaylock = {};
 

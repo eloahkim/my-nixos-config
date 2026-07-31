@@ -121,6 +121,7 @@
     apps = {
       firefox.enable = true;
       ungoogled.enable = false;
+      vivaldi.enable = true;
       general.enable = true;
       git.enable = true;
       vim.enable = true;

@@ -28,5 +28,6 @@
       ./apps/vim.nix # Vim
       ./apps/emacs.nix # Emacs
       ./apps/browser/ungoogled-chromium.nix # O navegador.
+      ./apps/browser/vivaldi.nix # Browser Chromium com adblock embutido.
     ];
 }

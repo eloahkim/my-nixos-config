@@ -12,8 +12,7 @@
     };
     # Noctalia
     noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:noctalia-dev/noctalia/cachix";
     };
     # Mango
     mangowm = {
