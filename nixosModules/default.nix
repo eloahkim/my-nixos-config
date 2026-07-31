@@ -21,10 +21,12 @@
       ./system/keyboard.nix # Desativa o teclado defeituoso.
       ./system/pipewire.nix # Sistema de som.
       ./system/zram.nix # zram
+      ./system/fonts.nix # Fontes do sistema
       ./apps/browser/firefox.nix
       ./apps/general.nix # Programas que uso em qualquer DE.
       ./apps/git.nix # Git
       ./apps/vim.nix # Vim
+      ./apps/emacs.nix # Emacs
       ./apps/browser/ungoogled-chromium.nix # O navegador.
     ];
 }

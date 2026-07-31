@@ -116,6 +116,7 @@
       keyboard.enable = true;
       pipewire.enable = true;
       zram.enable = true;
+      fonts.enable = true;
     };
     apps = {
       firefox.enable = true;
@@ -123,6 +124,7 @@
       general.enable = true;
       git.enable = true;
       vim.enable = true;
+      emacs.enable = true;
     };
     firewall.enable = true;
     network.avahi.enable = true;
