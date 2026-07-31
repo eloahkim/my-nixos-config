@@ -46,6 +46,7 @@
       gsettings-desktop-schemas
       adw-gtk3
       gnome-themes-extra
+      bibata-cursors
       kdePackages.qt6ct
       papirus-icon-theme
     ];

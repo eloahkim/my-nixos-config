@@ -19,7 +19,7 @@
       # Audio
       picard
       feishin
-      opusTools
+      opus-tools
 
       # Image
       imagemagick
