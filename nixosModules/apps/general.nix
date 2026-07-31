@@ -20,6 +20,7 @@
       picard
       feishin
       opus-tools
+      lrcget
 
       # Image
       imagemagick
@@ -28,7 +29,8 @@
       # Video
       #parabolic
       #vlc
-      haruna
+      #haruna
+      mpv
       yt-dlp
 
       # Utilitaries
