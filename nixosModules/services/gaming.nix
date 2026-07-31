@@ -27,7 +27,7 @@
       #dolphin-emu # Emulador de GameCube e Wii.
       heroic
       #prismlauncher # Launcher de Minecraft.
-      wineWowPackages.stable
+      wineWow64Packages.stable
       winetricks
     ];
   };

@@ -103,7 +103,7 @@
     };
     services = {
       flatpak.enable = true;
-      gaming.enable = false;
+      gaming.enable = true;
       jellyfin.enable = false;
       podman.enable = true;
       fhs.enable = true;
