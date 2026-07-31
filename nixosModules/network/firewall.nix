@@ -6,7 +6,6 @@
     networking = {
       firewall = {
         enable = true;
-        backend = "nftables";
         # Syncthing: 4533 (TCP)
         # Jellyfin:  8096 (TCP)
         allowedTCPPorts = [ 4533 8096 ];

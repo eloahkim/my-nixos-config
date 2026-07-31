@@ -33,7 +33,7 @@
 
       # Utilitaries
       android-tools
-      pipx
+      #pipx
 
       # System
       btop

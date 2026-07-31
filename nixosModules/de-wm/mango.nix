@@ -8,6 +8,7 @@
   options.my-nixos.desktop.mango.enable = lib.mkEnableOption "Habilitar Mango (Wayland compositor)";
   config = lib.mkIf config.my-nixos.desktop.mango.enable {
     programs.mango.enable = true;
+    programs.dconf.enable = true;
 
     services.displayManager.ly.enable = true;
     services.gnome.gnome-keyring.enable = true;
@@ -41,6 +42,8 @@
       libnotify
       udiskie
       nwg-look
+      glib
+      gsettings-desktop-schemas
       adw-gtk3
       gnome-themes-extra
       kdePackages.qt6ct

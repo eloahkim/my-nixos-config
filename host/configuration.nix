@@ -55,7 +55,7 @@
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "br";
-    xkb.variant = "";
+    xkb.variant = "abnt2";
   };
 
   # Configure console keymap
@@ -103,7 +103,7 @@
     };
     services = {
       flatpak.enable = true;
-      gaming.enable = true;
+      gaming.enable = false;
       jellyfin.enable = false;
       podman.enable = true;
       fhs.enable = true;
@@ -119,7 +119,7 @@
     };
     apps = {
       firefox.enable = true;
-      #ungoogled.enable = true;
+      ungoogled.enable = false;
       general.enable = true;
       git.enable = true;
       vim.enable = true;
