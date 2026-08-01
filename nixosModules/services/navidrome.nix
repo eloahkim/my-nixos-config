@@ -19,10 +19,16 @@
       # Chaves do LastFM vêm do sops (ND_LASTFM_APIKEY / ND_LASTFM_SECRET).
       environmentFile = config.sops.templates."navidrome.env".path;
 
+      # Plugin apple-music (metadados do iTunes/Apple Music): compilado pelo
+      # nixpkgs e embutido no store; nada de baixar/copiar arquivo manual.
+      plugins = [ pkgs.navidromePlugins.apple-music ];
+
       settings = {
         Address = "0.0.0.0"; # LAN, como o compose publicando 4533.
         Port = 4533;
         EnableInsightsCollector = true;
+
+        Plugins.Enabled = true; # default já é true; explícito por clareza.
 
         LogLevel = "info";
         SessionTimeout = "24h";
@@ -38,7 +44,8 @@
           Count = 3;
         };
 
-        Agents = "apple-music,lastfm,deezer,listenbrainz";
+        # ID do plugin vem do nome do .ndp: apple-music-plugin.
+        Agents = "apple-music-plugin,lastfm,deezer,listenbrainz";
 
         LastFM = {
           Language = "pt,en";
