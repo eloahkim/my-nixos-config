@@ -17,6 +17,7 @@
         # gráficos (GUI/AppImage)
         libGL
         libglvnd
+        libdrm
         wayland
         libxkbcommon
         libx11
@@ -25,11 +26,33 @@
         libxcursor
         libxrandr
         libxi
+        libxshmfence
+        libxcomposite
+        libxdamage
+        libxfixes
+        libxrender
+        libxinerama
+        libXScrnSaver
+        libgbm
         gtk3
         gdk-pixbuf
         cairo
         pango
         glib
+        harfbuzz
+        fribidi
+        # Qt/AppImage auxiliares
+        dbus
+        pcre2
+        libpng
+        libjpeg
+        libwebp
+        libtiff
+        # criptografia
+        libgpg-error
+        libgcrypt
+        gmp
+        pkgs.e2fsprogs.out
         # rede
         openssl
         curl
