@@ -22,6 +22,7 @@
         owner = "kim";
         group = "users";
         mode = "0400";
+        restartUnits = [ "navidrome.service" ];
         content = ''
           ND_LASTFM_APIKEY=${config.sops.placeholder."lastfm-apikey"}
           ND_LASTFM_SECRET=${config.sops.placeholder."lastfm-secret"}
