@@ -15,6 +15,9 @@
       # Security
       keepassxc
       #veracrypt
+      age
+      sops
+      ssh-to-age
 
       # Audio
       picard

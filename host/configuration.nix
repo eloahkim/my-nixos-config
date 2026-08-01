@@ -105,6 +105,7 @@
       flatpak.enable = true;
       gaming.enable = true;
       jellyfin.enable = false;
+      navidrome.enable = true;
       podman.enable = true;
       fhs.enable = true;
     };
@@ -115,6 +116,7 @@
       bluetooth.enable = true;
       keyboard.enable = true;
       pipewire.enable = true;
+      secrets.enable = true;
       zram.enable = true;
       fonts.enable = true;
     };

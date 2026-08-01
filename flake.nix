@@ -19,6 +19,11 @@
       url = "github:mangowm/mango/wl-only";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # Secrets
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, mangowm, ... }@inputs: {

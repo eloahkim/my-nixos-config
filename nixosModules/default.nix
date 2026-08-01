@@ -14,9 +14,11 @@
       ./services/flatpak.nix # Habilita e resolve flatpak.
       ./services/gaming.nix # Tudo relacionado à jogos.
       ./services/jellyfin.nix # Jellyfin, meu "streaming caseiro"
+      ./services/navidrome.nix # Navidrome, meu "streaming" de música.
       ./services/podman.nix # Habilita o podman.
       ./virtualization/virt-manager.nix
       ./system/shell.nix # Configurações do bash.
+      ./system/secrets.nix # Secrets via sops-nix.
       ./system/bluetooth.nix # Habilita o bluetooth quando é necessário.
       ./system/keyboard.nix # Desativa o teclado defeituoso.
       ./system/pipewire.nix # Sistema de som.
