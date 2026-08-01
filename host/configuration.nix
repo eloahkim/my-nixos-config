@@ -115,6 +115,7 @@
     system = {
       bluetooth.enable = true;
       keyboard.enable = true;
+      nix-ld.enable = true;
       pipewire.enable = true;
       secrets.enable = true;
       zram.enable = true;

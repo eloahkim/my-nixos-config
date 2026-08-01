@@ -24,6 +24,8 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Flatpaks declarativos
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, mangowm, ... }@inputs: {

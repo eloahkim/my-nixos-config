@@ -19,6 +19,7 @@
       ./virtualization/virt-manager.nix
       ./system/shell.nix # Configurações do bash.
       ./system/secrets.nix # Secrets via sops-nix.
+      ./system/nix-ld.nix # Roda binários fechados/AppImages.
       ./system/bluetooth.nix # Habilita o bluetooth quando é necessário.
       ./system/keyboard.nix # Desativa o teclado defeituoso.
       ./system/pipewire.nix # Sistema de som.
