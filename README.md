@@ -1,5 +1,9 @@
 # NixOS dotfiles
 
+> [!NOTE]
+> Esta é uma configuração **pessoal**. Decisões aqui servem à máquina (lilith)
+> e às preferências do autor — não é um template. Aproveite ideias, não o repo.
+
 Configuração do NixOS usando Nix Flakes. Host atual: **lilith** (Lenovo IdeaPad S145).
 
 ## Estrutura
@@ -13,6 +17,8 @@ host/
 nixosModules/
   default.nix                 # Índice: importa todos os módulos abaixo
   <categoria>/<feature>.nix   # Um feature por arquivo (define options + config)
+  system/packages.nix         # Acumulador de pacotes (my-nixos.packages)
+  system/assertions.nix       # Guarda-rails de configuração
 secrets/                      # Secrets cifrados com sops (não abrir)
 ```
 
@@ -23,8 +29,28 @@ Cada módulo em `nixosModules/<categoria>/<nome>.nix` define uma opção
 
 As habilitações ficam centralizadas no bloco `my-nixos` de `host/configuration.nix`.
 
+### Pacotes: use o acumulador `my-nixos.packages`
+
+Em vez de `environment.systemPackages`, módulos **contribuem** pacotes no
+acumulador (`nixosModules/system/packages.nix`); um único ponto instala tudo:
+
+```nix
+my-nixos.packages = {
+  inherit (pkgs) rar unrar jq;
+  inherit (pkgs.kdePackages) kate;
+};
+```
+
+A lista total fica visível e o mesmo option servirá depois para home-manager.
+
+### Guarda-rails (`system/assertions.nix`)
+
+Validações de combinações inválidas (ex.: só uma DE por vez em
+`my-nixos.desktop`). Liga em `my-nixos.system.assertions.enable = true`.
+
 Para adicionar uma feature:
-1. Criar `nixosModules/<categoria>/<feature>.nix` com `options` + `config`;
+1. Criar `nixosModules/<categoria>/<feature>.nix` com `options` + `config`
+   (pacotes vão para `my-nixos.packages`, não `environment.systemPackages`);
 2. Importá-la no `nixosModules/default.nix`;
 3. Ligar em `host/configuration.nix` (`<categoria>.<feature>.enable = true`).
 
