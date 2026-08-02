@@ -32,7 +32,6 @@
     # Aqui é necessário colocar o hostname da máquina.
     nixosConfigurations = {
       "lilith" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           # Isso faz com que o configuration.nix continue funcionando.
