@@ -16,13 +16,11 @@ in
 {
   options.my-nixos.apps.vivaldi.enable = lib.mkEnableOption "Habilitar Vivaldi Browser";
   config = lib.mkIf config.my-nixos.apps.vivaldi.enable {
-    environment.systemPackages = [
-      (pkgs.vivaldi.override {
-        proprietaryCodecs = true;
-        enableWidevine = true;
-        vivaldi-ffmpeg-codecs = ffmpegCodecs;
-        widevine-cdm = pkgs.widevine-cdm;
-      })
-    ];
+    my-nixos.packages.vivaldi = pkgs.vivaldi.override {
+      proprietaryCodecs = true;
+      enableWidevine = true;
+      vivaldi-ffmpeg-codecs = ffmpegCodecs;
+      widevine-cdm = pkgs.widevine-cdm;
+    };
   };
 }

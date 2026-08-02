@@ -2,7 +2,7 @@
 { config, pkgs, lib, ... }:
 {
   options.my-nixos.system.shell.enable = lib.mkEnableOption "Habilitar alias do shell (bash)";
-  config = lib.mkIf config.my-nixos.services.podman.enable {
+  config = lib.mkIf config.my-nixos.system.shell.enable {
     programs.bash.shellAliases = {
       neofetch-like = "fastfetch -c neofetch";
       open = "xdg-open";

@@ -116,11 +116,13 @@
     virt.virtmanager.enable = false;
     # Coisas do sistema
     system = {
+      assertions.enable = true;
       bluetooth.enable = true;
       keyboard.enable = true;
       nix-ld.enable = true;
       pipewire.enable = true;
       secrets.enable = true;
+      shell.enable = true;
       zram.enable = true;
       fonts.enable = true;
     };

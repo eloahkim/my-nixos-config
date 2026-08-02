@@ -4,60 +4,43 @@
 {
   options.my-nixos.apps.general.enable = lib.mkEnableOption "Instala alguns programas que uso essencialmente em qualquer DE.";
   config = lib.mkIf config.my-nixos.apps.general.enable {
-    environment.systemPackages = with pkgs; [
+    my-nixos.packages = {
       # Archive
-      rar
-      unrar
-      unzip
-      wget
-      zip
+      inherit (pkgs) rar unrar unzip wget zip;
 
       # Security
-      keepassxc
+      inherit (pkgs) keepassxc age sops ssh-to-age;
       #veracrypt
-      age
-      sops
-      ssh-to-age
 
       # Audio
-      picard
-      feishin
-      opus-tools
-      lrcget
+      inherit (pkgs) picard feishin opus-tools lrcget;
 
       # Image
-      imagemagick
+      inherit (pkgs) imagemagick;
       #gimp-with-plugins
 
       # Video
+      inherit (pkgs) mpv yt-dlp;
       #parabolic
       #vlc
       #haruna
-      mpv
-      yt-dlp
 
       # Utilitaries
-      android-tools
+      inherit (pkgs) android-tools;
       #pipx
 
       # System
-      btop
-      efibootmgr
-      fastfetch
+      inherit (pkgs) btop efibootmgr fastfetch rclone rsync syncthing;
       #neovim
-      rclone
-      rsync
-      syncthing
 
       # Web
-      brave
-      qbittorrent
+      inherit (pkgs) brave qbittorrent;
       #telegram-desktop
 
       # Misc
-      libreoffice-qt6-fresh
+      inherit (pkgs) libreoffice-qt6-fresh;
 
       #inputs.helix.packages."${pkgs.system}".helix
-    ];
+    };
   };
 }

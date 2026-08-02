@@ -18,14 +18,10 @@
       epiphany # web browser
     ];
 
-    environment.systemPackages = with pkgs; [
-      gnomeExtensions.appindicator
-      gnomeExtensions.pop-shell
-      gnomeExtensions.paperwm
-      gnome.gnome-tweaks
-      gparted
-      rhythmbox
-      transmission-gtk
-    ];
+    my-nixos.packages = {
+      inherit (pkgs.gnomeExtensions) appindicator "pop-shell" paperwm;
+      inherit (pkgs.gnome) gnome-tweaks;
+      inherit (pkgs) gparted rhythmbox transmission-gtk;
+    };
   };
 }

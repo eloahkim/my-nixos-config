@@ -27,31 +27,17 @@
         };
       };
       #programs.waybar.enable = true;
-      environment.systemPackages = with pkgs; [
+      my-nixos.packages = {
         #alacritty
-        qalculate-gtk # Calculadora
-        ncdu # Analisador de uso de disco
-        ddcutil # Utilitário para controle de brilho
-        ranger # Gerenciador de arquivos no terminal
-	imv # Visualizador de imagens
-	mediainfo
-        kitty # terminal
-	zathura # Leitor de PDFs
-        cliphist
-        wl-clipboard
-        libnotify
-        udiskie
-        xwayland-satellite
-        nwg-look
-        adw-gtk3
-        gnome-themes-extra
-        kdePackages.qt6ct
-        papirus-icon-theme
+        inherit (pkgs) qalculate-gtk ncdu ddcutil ranger imv mediainfo kitty
+          zathura cliphist wl-clipboard libnotify udiskie xwayland-satellite
+          nwg-look adw-gtk3 gnome-themes-extra papirus-icon-theme;
+        inherit (pkgs.kdePackages) qt6ct;
         #gammastep
         #fuzzel
         #swaylock
         #mako
         #swayidle
-      ];
+      };
     };
 }

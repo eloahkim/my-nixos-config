@@ -11,9 +11,8 @@
       };
     };
     # Pacotes adicionais que uso com podman.
-    environment.systemPackages = with pkgs; [
-      podman-compose
-      distrobox
-    ];
+    my-nixos.packages = {
+      inherit (pkgs) podman-compose distrobox;
+    };
   };
 }

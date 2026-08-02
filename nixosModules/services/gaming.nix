@@ -23,12 +23,11 @@
     services.xserver.videoDrivers = [ "amdgpu" ];
 
 
-    environment.systemPackages = with pkgs; [
+    my-nixos.packages = {
       #dolphin-emu # Emulador de GameCube e Wii.
-      heroic
+      inherit (pkgs) heroic winetricks;
       #prismlauncher # Launcher de Minecraft.
-      wineWow64Packages.stable
-      winetricks
-    ];
+      inherit (pkgs.wineWow64Packages) stable;
+    };
   };
 }
