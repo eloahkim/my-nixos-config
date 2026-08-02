@@ -11,21 +11,18 @@
     services.flatpak = {
       enable = true;
 
-      # Declarar remotes sobrescreve o default (flathub), então o incluímos.
+      # Declarar remotes sobrescreve o default (flathub)
       remotes = [{
         name = "flathub";
         location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
       }];
-
       packages = [
         "com.discordapp.Discord"
         "org.telegram.desktop"
       ];
-
-      # false no início: só gerencia o que está declarado acima.
       uninstallUnmanaged = false;
-
       update.auto.enable = true;
+      uninstallUnused = true;
     };
   };
 }
