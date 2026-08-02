@@ -129,7 +129,7 @@
     apps = {
       firefox.enable = true;
       ungoogled.enable = false;
-      vivaldi.enable = true;
+      vivaldi.enable = false;
       general.enable = true;
       git.enable = true;
       vim.enable = true;

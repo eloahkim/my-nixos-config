@@ -29,6 +29,10 @@
         export FHS=1
         export LANG=C.UTF-8
         export LC_ALL=C.UTF-8
+
+        echo -e "\e[1;33m[fhs] ambiente FHS ativo\e[0m"
+        export PS1='[FHS] \u@\h:\w\$ '
+        export PROMPT_COMMAND='PS1="[FHS] \u@\h:\w\$ "'
       '';
 
       runScript = "bash";

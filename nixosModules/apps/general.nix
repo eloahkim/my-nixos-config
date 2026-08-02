@@ -9,15 +9,8 @@
       inherit (pkgs) rar unrar unzip wget zip;
 
       # Security
-      inherit (pkgs) keepassxc age sops ssh-to-age;
+      inherit (pkgs) age sops ssh-to-age;
       #veracrypt
-
-      # Audio
-      inherit (pkgs) picard feishin opus-tools lrcget;
-
-      # Image
-      inherit (pkgs) imagemagick;
-      #gimp-with-plugins
 
       # Video
       inherit (pkgs) mpv yt-dlp;
@@ -25,22 +18,9 @@
       #vlc
       #haruna
 
-      # Utilitaries
-      inherit (pkgs) android-tools;
-      #pipx
-
       # System
-      inherit (pkgs) btop efibootmgr fastfetch rclone rsync syncthing;
+      inherit (pkgs) btop efibootmgr fastfetch rclone rsync;
       #neovim
-
-      # Web
-      inherit (pkgs) brave qbittorrent;
-      #telegram-desktop
-
-      # Misc
-      inherit (pkgs) libreoffice-qt6-fresh;
-
-      #inputs.helix.packages."${pkgs.system}".helix
     };
   };
 }

@@ -10,11 +10,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Noctalia
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
     };
-    # Mango
     mangowm = {
       url = "github:mangowm/mango/wl-only";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -26,9 +24,17 @@
     };
     # Flatpaks declarativos
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, mangowm, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, disko, mangowm, home-manager, firefox-addons, ... }@inputs: {
     # Aqui é necessário colocar o hostname da máquina.
     nixosConfigurations = {
       "lilith" = nixpkgs.lib.nixosSystem {
@@ -38,6 +44,13 @@
           ./host/configuration.nix
           ./host/disko-config.nix
           ./nixosModules/default.nix
+	  home-manager.nixosModules.home-manager
+	  {
+	    home-manager.useGlobalPkgs = true;
+	    home-manager.useUserPackages = true;
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    home-manager.users.kim = import ./home;
+	  }
           # Módulo que corrige peculiaridades da minha máquina atual.
           nixos-hardware.nixosModules.lenovo-ideapad-s145-15api
           disko.nixosModules.disko
