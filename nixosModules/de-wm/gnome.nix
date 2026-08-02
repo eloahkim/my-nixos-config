@@ -14,14 +14,13 @@
 
     # Excluir alguns programas que vem instalados por padrão.
     environment.gnome.excludePackages = with pkgs; [
-      gnome.gnome-music # music player
+      gnome-music # music player
       epiphany # web browser
     ];
 
     my-nixos.packages = {
       inherit (pkgs.gnomeExtensions) appindicator "pop-shell" paperwm;
-      inherit (pkgs.gnome) gnome-tweaks;
-      inherit (pkgs) gparted rhythmbox transmission-gtk;
+      inherit (pkgs) gnome-tweaks gparted rhythmbox transmission_4-gtk;
     };
   };
 }
