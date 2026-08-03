@@ -6,6 +6,7 @@
   imports = [
     ./apps/git.nix
     ./apps/firefox.nix
+    ./apps/mpv.nix
     ./apps/general.nix
   ];
 }

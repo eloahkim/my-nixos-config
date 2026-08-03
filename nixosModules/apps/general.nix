@@ -13,7 +13,7 @@
       #veracrypt
 
       # Video
-      inherit (pkgs) mpv yt-dlp;
+      inherit (pkgs) yt-dlp;
       #parabolic
       #vlc
       #haruna

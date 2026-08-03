@@ -128,6 +128,7 @@
     };
     apps = {
       firefox.enable = true;
+      mpv.enable = true;
       ungoogled.enable = false;
       vivaldi.enable = false;
       general.enable = true;

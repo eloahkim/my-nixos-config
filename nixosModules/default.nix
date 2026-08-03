@@ -27,11 +27,12 @@
       ./system/pipewire.nix # Sistema de som.
       ./system/zram.nix # zram
       ./system/fonts.nix # Fontes do sistema
-      ./apps/browser/firefox.nix
       ./apps/general.nix # Programas que uso em qualquer DE.
       ./apps/git.nix # Git
       ./apps/vim.nix # Vim
+      ./apps/mpv.nix
       ./apps/emacs.nix # Emacs
+      ./apps/browser/firefox.nix 
       ./apps/browser/ungoogled-chromium.nix # O navegador.
       ./apps/browser/vivaldi.nix # Browser Chromium com adblock embutido.
     ];

@@ -5,6 +5,7 @@
       enable = true;
       languagePacks = [ "pt-BR" ];
       configPath = ".mozilla/firefox";
+      policies.DisableFirefoxAccounts = true;
 
       profiles.kim = {
         isDefault = true;
