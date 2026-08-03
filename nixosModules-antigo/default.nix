@@ -17,16 +17,6 @@
       ./services/navidrome.nix # Navidrome, meu "streaming" de música.
       ./services/podman.nix # Habilita o podman.
       ./virtualization/virt-manager.nix
-      ./system/shell.nix # Configurações do bash.
-      ./system/secrets.nix # Secrets via sops-nix.
-      ./system/nix-ld.nix # Roda binários fechados/AppImages.
-      ./system/assertions.nix # Guarda-rails de configuração.
-      ./system/packages.nix # Acumulador de pacotes do sistema.
-      ./system/bluetooth.nix # Habilita o bluetooth quando é necessário.
-      ./system/keyboard.nix # Desativa o teclado defeituoso.
-      ./system/pipewire.nix # Sistema de som.
-      ./system/zram.nix # zram
-      ./system/fonts.nix # Fontes do sistema
       ./apps/general.nix # Programas que uso em qualquer DE.
       ./apps/git.nix # Git
       ./apps/vim.nix # Vim

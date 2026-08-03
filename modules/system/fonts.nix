@@ -1,8 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 {
-  # Fontes do sistema
-  options.my-nixos.system.fonts.enable = lib.mkEnableOption "Instala as fontes do sistema";
-  config = lib.mkIf config.my-nixos.system.fonts.enable {
+  flake.modules.nixos."system/fonts" = { pkgs, ... }: {
     fonts = {
       fontDir.enable = true;
       packages = with pkgs; [

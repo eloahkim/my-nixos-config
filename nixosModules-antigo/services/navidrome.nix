@@ -4,8 +4,8 @@
   options.my-nixos.services.navidrome.enable = lib.mkEnableOption "Habilitar Navidrome";
   config = lib.mkIf config.my-nixos.services.navidrome.enable {
     assertions = [{
-      assertion = config.my-nixos.system.secrets.enable;
-      message = "navidrome precisa de my-nixos.system.secrets.enable = true";
+      assertion = config.sops.templates ? "navidrome.env";
+      message = "o aspecto services/navidrome precisa que o aspecto system/secrets também esteja importado no host";
     }];
 
     services.navidrome = {

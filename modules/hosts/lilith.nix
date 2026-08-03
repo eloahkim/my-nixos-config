@@ -12,6 +12,17 @@
       # transição: ainda aponta pra pasta antiga
       ../../nixosModules-antigo/default.nix
 
+      # Fase 2 — aspectos de system/
+      inputs.self.modules.nixos.base
+      inputs.self.modules.nixos."system/secrets"
+      inputs.self.modules.nixos."system/shell"
+      inputs.self.modules.nixos."system/bluetooth"
+      inputs.self.modules.nixos."system/keyboard"
+      inputs.self.modules.nixos."system/pipewire"
+      inputs.self.modules.nixos."system/zram"
+      inputs.self.modules.nixos."system/fonts"
+      inputs.self.modules.nixos."system/nix-ld"
+
       ({ config, pkgs, inputs, ... }:
         {
           nixpkgs.hostPlatform = "x86_64-linux";
@@ -102,18 +113,7 @@
             };
             # Virtualização
             virt.virtmanager.enable = false;
-            # Coisas do sistema
-            system = {
-              assertions.enable = true;
-              bluetooth.enable = true;
-              keyboard.enable = true;
-              nix-ld.enable = true;
-              pipewire.enable = true;
-              secrets.enable = true;
-              shell.enable = true;
-              zram.enable = true;
-              fonts.enable = true;
-            };
+            # Coisas do sistema migradas para aspects na Fase 2
             apps = {
               firefox.enable = true;
               mpv.enable = true;
@@ -158,7 +158,12 @@
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.kim = import ../../home;
+        home-manager.users.kim = {
+          imports = [
+            ../../home
+            inputs.self.modules.homeManager.base
+          ];
+        };
       }
     ];
   };

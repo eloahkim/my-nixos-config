@@ -1,8 +1,6 @@
-{ config, pkgs, lib, ... }:
-
+{ ... }:
 {
-  options.my-nixos.system.nix-ld.enable = lib.mkEnableOption "Habilitar nix-ld";
-  config = lib.mkIf config.my-nixos.system.nix-ld.enable {
+  flake.modules.nixos."system/nix-ld" = { pkgs, ... }: {
     # nix-ld: roda binários fechados/AppImages transparentemente, sem entrar
     # num shell FHS (o `fhs` fica só para dev/build).
     programs.nix-ld = {

@@ -1,12 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
-# Secrets via sops-nix: decripta em /run/secrets na ativação.
+{ inputs, ... }:
 {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
+  flake.modules.nixos."system/secrets" = { config, ... }: {
+    imports = [
+      inputs.sops-nix.nixosModules.sops
+    ];
 
-  options.my-nixos.system.secrets.enable = lib.mkEnableOption "Habilitar secrets (sops-nix)";
-  config = lib.mkIf config.my-nixos.system.secrets.enable {
     sops = {
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       defaultSopsFile = ../../secrets/secrets.yaml;
