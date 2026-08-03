@@ -7,5 +7,10 @@
       startWithGraphical = true;
       defaultEditor = true;
     };
+
+    my-nixos.packages = {
+      nixd = pkgs.nixd;
+      inherit (pkgs) gcc gnumake;
+    };
   };
 }
