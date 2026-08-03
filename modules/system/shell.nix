@@ -6,5 +6,7 @@
       open = "xdg-open";
       #nixos-upgrade = "./~/.nixos/nixos-upgrade.sh";
     };
+
+    programs.nix-index.enable = true;
   };
 }
