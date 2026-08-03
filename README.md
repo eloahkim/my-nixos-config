@@ -4,55 +4,66 @@
 > Esta é uma configuração **pessoal**. Decisões aqui servem à máquina (lilith)
 > e às preferências do autor — não é um template. Aproveite ideias, não o repo.
 
-Configuração do NixOS usando Nix Flakes. Host atual: **lilith** (Lenovo IdeaPad S145).
+Configuração do NixOS usando Nix Flakes com o **Dendritic Pattern**
+(flake-parts + import-tree). Host atual: **lilith** (Lenovo IdeaPad S145).
 
 ## Estrutura
 
 ```
-flake.nix                     # Inputs (nixpkgs 26.05, unstable, mango, noctalia, sops-nix) e outputs
-host/
-  configuration.nix           # Config base do sistema + bloco my-nixos.* (o que está ligado)
-  hardware-configuration.nix  # Gerado pelo nixos-generate-config (não editar à mão)
-  disko-config.nix            # Layout de disco
-nixosModules/
-  default.nix                 # Índice: importa todos os módulos abaixo
-  <categoria>/<feature>.nix   # Um feature por arquivo (define options + config)
-  system/packages.nix         # Acumulador de pacotes (my-nixos.packages)
-  system/assertions.nix       # Guarda-rails de configuração
+flake.nix                     # Só inputs; outputs = flake-parts (mkFlake + import-tree)
+modules/
+  flake/
+    core.nix                  # systems + import que cria flake.modules.<classe>.<nome>
+    constants.nix             # Constants Aspect (myConstants: usuário, hostname, timezone)
+  hosts/
+    lilith.nix                # O host: lista de aspects que a lilith importa
+  system/                     # Simple Aspects (sem enable): secrets, shell, bluetooth, ...
+  apps/                       # Simple Aspects: git, vim, mpv, emacs, general
+    browsers/                 # firefox, ungoogled-chromium, vivaldi
+  desktop/                    # Multi Context Aspects: mango, plasma, niri, gnome, noctalia
+  services/                   # navidrome, jellyfin, podman, flatpak, fhs, gaming
+  network/                    # firewall, avahi
+  virtualization/             # virt-manager
+hardware/                     # lilith-hardware-configuration.nix, lilith-disko-config.nix
 secrets/                      # Secrets cifrados com sops (não abrir)
 ```
 
-## Convenção `my-nixos.*`
+## Dendritic: uma feature = um arquivo (aspect)
 
-Cada módulo em `nixosModules/<categoria>/<nome>.nix` define uma opção
-`options.my-nixos.<categoria>.<nome>.enable` e só aplica a config quando ligada.
+Cada arquivo em `modules/` é um **aspect**: um registrador
+`flake.modules.<classe>.<nome>` (classe `nixos` ou `homeManager`). Habilitar um
+aspect = **importá-lo** na lista do host — não existe mais toggle `enable`.
 
-As habilitações ficam centralizadas no bloco `my-nixos` de `host/configuration.nix`.
+- `inputs.self.modules.nixos."system/shell"` — aspect só de sistema;
+- `inputs.self.modules.nixos."apps/git"` — aspect nixos;
+- `inputs.self.modules.homeManager."apps/git"` — aspect home-manager;
+- `inputs.self.modules.nixos."desktop/mango"` — Multi Context: o aspect nixos já
+  "puxa" o home-manager por dentro via `home-manager.sharedModules`.
 
-### Pacotes: use o acumulador `my-nixos.packages`
+A lista `modules = [...]` e `home-manager.users.kim.imports = [...]` no host **é**
+a documentação do que está ligado.
 
-Em vez de `environment.systemPackages`, módulos **contribuem** pacotes no
-acumulador (`nixosModules/system/packages.nix`); um único ponto instala tudo:
+### Pacotes: Collector Aspect
+
+`modules/system/packages.nix` define dois acumuladores — `my-nixos.packages`
+(sistema) e `my-nixos.homePackages` (home) — e cada aspect contribui sua fatia:
 
 ```nix
 my-nixos.packages = {
   inherit (pkgs) rar unrar jq;
-  inherit (pkgs.kdePackages) kate;
 };
 ```
 
-A lista total fica visível e o mesmo option servirá depois para home-manager.
+### Assertions pontuais
 
-### Guarda-rails (`system/assertions.nix`)
-
-Validações de combinações inválidas (ex.: só uma DE por vez em
-`my-nixos.desktop`). Liga em `my-nixos.system.assertions.enable = true`.
+Não existe mais `assertions.nix` central. Cada aspect que precisa validação
+carrega a sua, checando **presença de config** (ex.: o Navidrome checa se
+`config.sops.templates ? "navidrome.env"`).
 
 Para adicionar uma feature:
-1. Criar `nixosModules/<categoria>/<feature>.nix` com `options` + `config`
-   (pacotes vão para `my-nixos.packages`, não `environment.systemPackages`);
-2. Importá-la no `nixosModules/default.nix`;
-3. Ligar em `host/configuration.nix` (`<categoria>.<feature>.enable = true`).
+1. Criar `modules/<categoria>/<feature>.nix` registrando o(s) aspect(s);
+2. `git add` o arquivo (o flake lê o índice do git);
+3. Importar na lista do host.
 
 ## Comandos
 

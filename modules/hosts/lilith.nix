@@ -9,9 +9,6 @@
       inputs.nixos-hardware.nixosModules.lenovo-ideapad-s145-15api
       inputs.home-manager.nixosModules.home-manager
 
-      # transição: ainda aponta pra pasta antiga
-      ../../nixosModules-antigo/default.nix
-
       # Fase 2 — aspectos de system/
       inputs.self.modules.nixos.base
       inputs.self.modules.nixos."system/secrets"
@@ -144,8 +141,11 @@
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit inputs; };
         home-manager.users.kim = {
+          home.username = "kim";
+          home.homeDirectory = "/home/kim";
+          home.stateVersion = "24.05";
+
           imports = [
-            ../../home
             inputs.self.modules.homeManager.base
             # Fase 3 — aspectos home de apps/
             inputs.self.modules.homeManager."apps/git"
