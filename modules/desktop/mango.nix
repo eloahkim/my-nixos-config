@@ -5,10 +5,6 @@
       inputs.mangowm.nixosModules.mango
     ];
 
-    home-manager.sharedModules = [
-      inputs.self.modules.homeManager."desktop/mango"
-    ];
-
     programs.mango.enable = true;
     programs.dconf.enable = true;
 
@@ -47,11 +43,5 @@
         papirus-icon-theme;
       inherit (pkgs.kdePackages) qt6ct;
     };
-  };
-
-  flake.modules.homeManager."desktop/mango" = { ... }: {
-    gtk.enable = true;
-    gtk.theme.name = "adw-gtk3";
-    gtk.iconTheme.name = "Papirus";
   };
 }
