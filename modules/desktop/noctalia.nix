@@ -1,12 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
-
+{ inputs, ... }:
 {
-  imports = [
-    inputs.noctalia.nixosModules.default
-  ];
+  flake.modules.nixos."desktop/noctalia" = { inputs, ... }: {
+    imports = [
+      inputs.noctalia.nixosModules.default
+    ];
 
-  options.my-nixos.desktop.noctalia.enable = lib.mkEnableOption "Habilitar Noctalia";
-  config = lib.mkIf config.my-nixos.desktop.noctalia.enable {
     programs.noctalia = {
       enable = true;
       recommendedServices.enable = true;

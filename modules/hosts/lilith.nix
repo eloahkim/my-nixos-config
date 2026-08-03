@@ -29,6 +29,10 @@
       inputs.self.modules.nixos."apps/general"
       inputs.self.modules.nixos."apps/emacs"
 
+      # Fase 4 — aspectos de desktop/ (só os enable = true)
+      inputs.self.modules.nixos."desktop/mango"
+      inputs.self.modules.nixos."desktop/noctalia"
+
       ({ config, pkgs, inputs, ... }:
         {
           nixpkgs.hostPlatform = "x86_64-linux";
@@ -102,13 +106,6 @@
 
           # Desktop Modular
           my-nixos = {
-            desktop = {
-              niri.enable = false;
-              mango.enable = true;
-              noctalia.enable = true;
-              plasma.enable = false;
-              gnome.enable = false;
-            };
             services = {
               flatpak.enable = true;
               gaming.enable = true;

@@ -3,11 +3,6 @@
 
 {
   imports = [
-      ./de-wm/gnome.nix # GNOME Desktop Environment.
-      ./de-wm/plasma.nix # KDE Plasma Desktop Environment.
-      ./de-wm/niri.nix # Niri
-      ./de-wm/mango.nix # Mango
-      ./de-wm/noctalia.nix # Noctalia
       ./network/firewall.nix # Configurações do firewall.
       ./network/avahi.nix # Avahi (mDNS/Zeroconf)
       ./services/fhs.nix # Ambiente FHS para executar binários que esperam /usr/lib, /usr/bin, etc.

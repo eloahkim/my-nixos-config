@@ -1,12 +1,14 @@
-{ config, pkgs, lib, inputs, ... }:
-
+{ inputs, ... }:
 {
-  imports = [
-    inputs.mangowm.nixosModules.mango
-  ];
+  flake.modules.nixos."desktop/mango" = { pkgs, inputs, ... }: {
+    imports = [
+      inputs.mangowm.nixosModules.mango
+    ];
 
-  options.my-nixos.desktop.mango.enable = lib.mkEnableOption "Habilitar Mango (Wayland compositor)";
-  config = lib.mkIf config.my-nixos.desktop.mango.enable {
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager."desktop/mango"
+    ];
+
     programs.mango.enable = true;
     programs.dconf.enable = true;
 
@@ -14,11 +16,11 @@
       enable = true;
       settings = {
         numlock = true;
-	animation = "matrix";
+        animation = "matrix";
       };
     };
     services.gnome.gnome-keyring.enable = true;
-    security.pam.services.swaylock = {};
+    security.pam.services.swaylock = { };
 
     services.udisks2.enable = true;
 
@@ -30,8 +32,8 @@
     xdg.portal = {
       wlr.enable = true;
       wlr.settings.screencast = {
-    	chooser_type = "dmenu";
-    	chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu";
+        chooser_type = "dmenu";
+        chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu";
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
@@ -45,5 +47,11 @@
         papirus-icon-theme;
       inherit (pkgs.kdePackages) qt6ct;
     };
+  };
+
+  flake.modules.homeManager."desktop/mango" = { ... }: {
+    gtk.enable = true;
+    gtk.theme.name = "adw-gtk3";
+    gtk.iconTheme.name = "Papirus";
   };
 }

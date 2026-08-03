@@ -1,8 +1,6 @@
-{ config, pkgs, lib, ... }:
-
+{ ... }:
 {
-  options.my-nixos.desktop.gnome.enable = lib.mkEnableOption "Habilitar GNOME e pacotes relacionados";
-  config = lib.mkIf config.my-nixos.desktop.gnome.enable {
+  flake.modules.nixos."desktop/gnome" = { pkgs, ... }: {
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;
 
