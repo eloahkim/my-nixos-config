@@ -23,6 +23,12 @@
       inputs.self.modules.nixos."system/fonts"
       inputs.self.modules.nixos."system/nix-ld"
 
+      # Fase 3 — aspectos de apps/
+      inputs.self.modules.nixos."apps/git"
+      inputs.self.modules.nixos."apps/vim"
+      inputs.self.modules.nixos."apps/general"
+      inputs.self.modules.nixos."apps/emacs"
+
       ({ config, pkgs, inputs, ... }:
         {
           nixpkgs.hostPlatform = "x86_64-linux";
@@ -114,16 +120,7 @@
             # Virtualização
             virt.virtmanager.enable = false;
             # Coisas do sistema migradas para aspects na Fase 2
-            apps = {
-              firefox.enable = true;
-              mpv.enable = true;
-              ungoogled.enable = false;
-              vivaldi.enable = false;
-              general.enable = true;
-              git.enable = true;
-              vim.enable = true;
-              emacs.enable = true;
-            };
+            # apps migrados para aspects na Fase 3
             firewall.enable = true;
             network.avahi.enable = true;
           };
@@ -162,6 +159,11 @@
           imports = [
             ../../home
             inputs.self.modules.homeManager.base
+            # Fase 3 — aspectos home de apps/
+            inputs.self.modules.homeManager."apps/git"
+            inputs.self.modules.homeManager."apps/mpv"
+            inputs.self.modules.homeManager."apps/general"
+            inputs.self.modules.homeManager."apps/browsers/firefox"
           ];
         };
       }

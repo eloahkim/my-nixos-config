@@ -1,8 +1,6 @@
-{ config, pkgs, lib, ... }:
-
+{ pkgs, ... }:
 {
-  options.my-nixos.apps.ungoogled.enable = lib.mkEnableOption "Habilitar Ungoogled Chromium";
-  config = lib.mkIf config.my-nixos.apps.ungoogled.enable {
+  flake.modules.nixos."apps/browsers/ungoogled-chromium" = { pkgs, ... }: {
     my-nixos.packages = {
       inherit (pkgs) ungoogled-chromium;
     };

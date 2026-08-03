@@ -17,13 +17,5 @@
       ./services/navidrome.nix # Navidrome, meu "streaming" de música.
       ./services/podman.nix # Habilita o podman.
       ./virtualization/virt-manager.nix
-      ./apps/general.nix # Programas que uso em qualquer DE.
-      ./apps/git.nix # Git
-      ./apps/vim.nix # Vim
-      ./apps/mpv.nix
-      ./apps/emacs.nix # Emacs
-      ./apps/browser/firefox.nix 
-      ./apps/browser/ungoogled-chromium.nix # O navegador.
-      ./apps/browser/vivaldi.nix # Browser Chromium com adblock embutido.
     ];
 }

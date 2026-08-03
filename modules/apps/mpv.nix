@@ -1,7 +1,6 @@
-{ osConfig, pkgs, lib, ... }:
-
+{ ... }:
 {
-  config = lib.mkIf osConfig.my-nixos.apps.mpv.enable {
+  flake.modules.homeManager."apps/mpv" = { ... }: {
     programs.mpv = {
       enable = true;
       config = {

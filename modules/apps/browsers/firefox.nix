@@ -1,6 +1,6 @@
-{ osConfig, pkgs, lib, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
-  config = lib.mkIf osConfig.my-nixos.apps.firefox.enable {
+  flake.modules.homeManager."apps/browsers/firefox" = { pkgs, inputs, ... }: {
     programs.firefox = {
       enable = true;
       languagePacks = [ "pt-BR" ];
@@ -20,14 +20,14 @@
           force = true;
         };
 
-	containers = {
-	  Pessoal   = { id = 1; color = "blue";      icon = "fingerprint"; };
-	  Trabalho  = { id = 2; color = "orange";    icon = "briefcase"; };
-	  Financeiro= { id = 3; color = "green";     icon = "dollar"; };
-	  Compras   = { id = 4; color = "pink";      icon = "cart"; };
-	  WhatsApp  = { id = 5; color = "turquoise"; icon = "fence"; };
-	};
-	containersForce = true;
+        containers = {
+          Pessoal    = { id = 1; color = "blue";      icon = "fingerprint"; };
+          Trabalho   = { id = 2; color = "orange";    icon = "briefcase"; };
+          Financeiro = { id = 3; color = "green";     icon = "dollar"; };
+          Compras    = { id = 4; color = "pink";      icon = "cart"; };
+          WhatsApp   = { id = 5; color = "turquoise"; icon = "fence"; };
+        };
+        containersForce = true;
 
         settings = {
           "browser.contentblocking.category" = "strict";
@@ -40,16 +40,16 @@
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
-	  "signon.rememberSignons" = false;
-	  "privacy.sanitize.sanitizeOnShutdown" = true;
-	  "privacy.clearOnShutdown.cookies" = true;
-	  "privacy.clearOnShutdown.offlineApps" = true;
-	  "datareporting.healthreport.uploadEnabled" = false;
-	  "browser.discovery.enabled" = false;
-	  "app.shield.optoutstudies.enabled" = false;
-	  "app.normandy.enabled" = false;
-	  "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
-	  "datareporting.usagereporting.uploadEnabled" = true;
+          "signon.rememberSignons" = false;
+          "privacy.sanitize.sanitizeOnShutdown" = true;
+          "privacy.clearOnShutdown.cookies" = true;
+          "privacy.clearOnShutdown.offlineApps" = true;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "browser.discovery.enabled" = false;
+          "app.shield.optoutstudies.enabled" = false;
+          "app.normandy.enabled" = false;
+          "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+          "datareporting.usagereporting.uploadEnabled" = true;
         };
       };
     };
