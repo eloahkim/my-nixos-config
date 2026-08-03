@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 # Navidrome - "streaming" de música self-hosted
 {
-  options.my-nixos.services.navidrome.enable = lib.mkEnableOption "Habilitar Navidrome";
-  config = lib.mkIf config.my-nixos.services.navidrome.enable {
+  flake.modules.nixos."services/navidrome" = { config, pkgs, lib, ... }: {
     assertions = [{
       assertion = config.sops.templates ? "navidrome.env";
       message = "o aspecto services/navidrome precisa que o aspecto system/secrets também esteja importado no host";

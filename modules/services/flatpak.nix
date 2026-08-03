@@ -1,12 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
-
+{ inputs, ... }:
 {
-  imports = [
-    inputs.nix-flatpak.nixosModules.nix-flatpak
-  ];
+  flake.modules.nixos."services/flatpak" = { inputs, ... }: {
+    imports = [
+      inputs.nix-flatpak.nixosModules.nix-flatpak
+    ];
 
-  options.my-nixos.services.flatpak.enable = lib.mkEnableOption "Habilitar flatpak";
-  config = lib.mkIf config.my-nixos.services.flatpak.enable {
     # Habilita o flatpak e declara apps/remotes via nix-flatpak.
     services.flatpak = {
       enable = true;

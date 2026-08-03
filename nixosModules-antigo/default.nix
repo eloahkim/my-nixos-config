@@ -1,16 +1,3 @@
-# Esse módulo é designado para apenas importar todos os outros módulos que existem. Essa é uma maneira mais fácil de habilitar todos os módulos de uma vez, e também faz com que eles sejam alternáveis em algum nível.
-{ config, pkgs, inputs, ... }:
-
-{
-  imports = [
-      ./network/firewall.nix # Configurações do firewall.
-      ./network/avahi.nix # Avahi (mDNS/Zeroconf)
-      ./services/fhs.nix # Ambiente FHS para executar binários que esperam /usr/lib, /usr/bin, etc.
-      ./services/flatpak.nix # Habilita e resolve flatpak.
-      ./services/gaming.nix # Tudo relacionado à jogos.
-      ./services/jellyfin.nix # Jellyfin, meu "streaming caseiro"
-      ./services/navidrome.nix # Navidrome, meu "streaming" de música.
-      ./services/podman.nix # Habilita o podman.
-      ./virtualization/virt-manager.nix
-    ];
-}
+# Esvaziado na Fase 5: todos os módulos migraram para aspectos em modules/.
+# A pasta nixosModules-antigo/ será removida por inteiro na Fase 6.
+{ ... }: { }

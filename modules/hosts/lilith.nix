@@ -33,6 +33,15 @@
       inputs.self.modules.nixos."desktop/mango"
       inputs.self.modules.nixos."desktop/noctalia"
 
+      # Fase 5 — aspectos de services/, network/, virtualization/ (só os enable = true)
+      inputs.self.modules.nixos."services/flatpak"
+      inputs.self.modules.nixos."services/gaming"
+      inputs.self.modules.nixos."services/navidrome"
+      inputs.self.modules.nixos."services/podman"
+      inputs.self.modules.nixos."services/fhs"
+      inputs.self.modules.nixos."network/firewall"
+      inputs.self.modules.nixos."network/avahi"
+
       ({ config, pkgs, inputs, ... }:
         {
           nixpkgs.hostPlatform = "x86_64-linux";
@@ -103,24 +112,6 @@
 
           # Allow unfree packages
           nixpkgs.config.allowUnfree = true;
-
-          # Desktop Modular
-          my-nixos = {
-            services = {
-              flatpak.enable = true;
-              gaming.enable = true;
-              jellyfin.enable = false;
-              navidrome.enable = true;
-              podman.enable = true;
-              fhs.enable = true;
-            };
-            # Virtualização
-            virt.virtmanager.enable = false;
-            # Coisas do sistema migradas para aspects na Fase 2
-            # apps migrados para aspects na Fase 3
-            firewall.enable = true;
-            network.avahi.enable = true;
-          };
 
           # Enable the default ports on firewall.
           services.syncthing.openDefaultPorts = true;

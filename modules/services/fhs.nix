@@ -1,9 +1,6 @@
-{ config, pkgs, lib, ... }:
-
+{ ... }:
 {
-  options.my-nixos.services.fhs.enable = lib.mkEnableOption "Habilitar ambiente FHS";
-
-  config = lib.mkIf config.my-nixos.services.fhs.enable {
+  flake.modules.nixos."services/fhs" = { pkgs, ... }: {
     my-nixos.packages.fhs = let
       base = pkgs.appimageTools.defaultFhsEnvArgs;
     in

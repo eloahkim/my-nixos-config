@@ -1,8 +1,6 @@
-{ config, pkgs, lib, ... }:
-
+{ ... }:
 {
-  options.my-nixos.services.podman.enable = lib.mkEnableOption "Habilitar podman";
-  config = lib.mkIf config.my-nixos.services.podman.enable {
+  flake.modules.nixos."services/podman" = { pkgs, ... }: {
     virtualisation.containers.enable = true;
     virtualisation = {
       podman = {

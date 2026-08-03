@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 {
-  options.my-nixos.services.gaming.enable = lib.mkEnableOption "Habilitar suíte de jogos e relacionados";
-  config = lib.mkIf config.my-nixos.services.gaming.enable {
+  flake.modules.nixos."services/gaming" = { pkgs, ... }: {
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -11,7 +10,7 @@
 
     programs.steam.extraPackages = with pkgs; [
       mangohud
-      ];
+    ];
 
     programs.gamemode.enable = true;
     hardware.steam-hardware.enable = true;
@@ -21,7 +20,6 @@
       enable32Bit = true;
     };
     services.xserver.videoDrivers = [ "amdgpu" ];
-
 
     my-nixos.packages = {
       #dolphin-emu # Emulador de GameCube e Wii.
