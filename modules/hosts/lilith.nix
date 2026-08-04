@@ -13,6 +13,7 @@
       inputs.self.modules.nixos.base
       inputs.self.modules.nixos."system/secrets"
       inputs.self.modules.nixos."system/shell"
+      inputs.self.modules.nixos."system/direnv"
       inputs.self.modules.nixos."system/bluetooth"
       inputs.self.modules.nixos."system/keyboard"
       inputs.self.modules.nixos."system/pipewire"
