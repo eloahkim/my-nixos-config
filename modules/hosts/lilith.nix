@@ -150,6 +150,7 @@
             inputs.self.modules.homeManager.base
             # Fase 3 — aspectos home de apps/
             inputs.self.modules.homeManager."apps/git"
+            inputs.self.modules.homeManager."apps/aria2"
             inputs.self.modules.homeManager."apps/mpv"
             inputs.self.modules.homeManager."apps/general"
             inputs.self.modules.homeManager."apps/browsers/firefox"
