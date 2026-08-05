@@ -26,6 +26,7 @@
       inputs.self.modules.nixos."apps/vim"
       inputs.self.modules.nixos."apps/general"
       inputs.self.modules.nixos."apps/emacs"
+      inputs.self.modules.nixos."apps/ente-auth"
 
       # Fase 4 — aspectos de desktop/ (só os enable = true)
       inputs.self.modules.nixos."desktop/mango"
