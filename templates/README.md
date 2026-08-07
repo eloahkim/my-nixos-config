@@ -1,21 +1,46 @@
-# Dev environments via direnv + Nix
+# Dev environments via devenv 2.x
 
-Copie o `.envrc` do stack desejado para a raiz do projeto e rode `direnv allow`.
+Cada projeto usa um ambiente `devenv` (arquivos `devenv.nix` + `devenv.yaml`/
+`devenv.lock`), que recebe o *stack* via *import* de um módulo central deste
+repo. A CLI de `devenv` está instalada no sistema (módulo `system/devenv`).
 
-| Stack          | Arquivo          | Ferramentas                                                       |
-| -------------- | ---------------- | ----------------------------------------------------------------- |
-| Python (uv)    | `.envrc.python`  | uv, python3, basedpyright, ruff, black, isort                     |
-| Web (JS/PHP)   | `.envrc.web`     | nodejs_22, pnpm, TS LSP, prettier, eslint, php, composer, phpactor, sqlite, mariadb-client |
-| C/C++          | `.envrc.c-cpp`   | clang/clangd, gcc, cmake, ninja, pkg-config, gdb, valgrind, bear  |
+## Scaffold de um projeto
 
-Exemplo:
+Copie os arquivos do template para a raiz do projeto:
 
-```console
-$ cp templates/.envrc.python meu-projeto/.envrc
+```bash
+$ cp templates/devenv.nix templates/devenv.yaml templates/.envrc templates/.gitignore meu-projeto/
 $ cd meu-projeto
-$ direnv allow
+$ nvim devenv.nix   # escolha o stack no `imports` (default = python)
+$ direnv allow      # carrega o ambiente
 ```
 
-Cada projeto carrega o devShell correspondente do flake de config, sem
-necessidade de `flake.nix` próprio. Depois que o repo estiver no GitHub, troque
-`path:/home/kim/.my-nixos-config` por `github:eloahkim/my-nixos-config`.
+O `devenv.lock` (pin dos inputs) é gerado na primeira avaliação.
+
+## Stacks de centrais (módulos em `devenv/`)
+
+| Stack            | Módulo central          | Ferramentas                                                          |
+| ---------------- | ----------------------- | -------------------------------------------------------------------- |
+| Python (uv)      | `devenv/python.nix`     | uv, python3, basedpyright, ruff, black, isort                        |
+| Web (JS/PHP)     | `devenv/web.nix`        | nodejs_22, pnpm, TS LSP, prettier, eslint, php, composer, phpactor, sqlite, mariadb-client + `services.mysql` + `processes.www` |
+| C/C++            | `devenv/c-cpp.nix`      | clang/clangd, gcc, cmake, ninja, pkg-config, gdb, valgrind, bear     |
+| Java (Maven)     | `devenv/java.nix`       | Temurin 21 (`JAVA_HOME`), Maven, jdt-language-server (jdtls p/ eglot)|
+
+## Workflow
+
+```bash
+devenv shell      # entra numa shell com o ambiente
+devenv up         # sobe services.* e processes.* (ex.: web = mysql + php -S)
+devenv test       # roda o enterTest
+devenv update     # atualiza o devenv.lock
+direnv reload     # reexporta o PATH (p/ LSPs/formatadores no Emacs)
+```
+
+## Via Git
+
+Depois do push, troque o caminho absoluto do `imports` por uma referência ao
+GitHub para tornar o `devenv.nix` portátil entre máquinas:
+`github:eloahkim/my-nixos-config/devenv/python.nix` (via input do `devenv.yaml`).
+
+> Nota: os antigos devShells (`modules/dev/*.nix`, carregados com `use flake`)
+> foram substituídos por este fluxo devenv.

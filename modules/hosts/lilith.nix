@@ -20,6 +20,7 @@
       inputs.self.modules.nixos."system/zram"
       inputs.self.modules.nixos."system/fonts"
       inputs.self.modules.nixos."system/nix-ld"
+      inputs.self.modules.nixos."system/devenv"
 
       # Fase 3 — aspectos de apps/
       inputs.self.modules.nixos."apps/git"
