@@ -29,7 +29,7 @@
       wlr.enable = true;
       wlr.settings.screencast = {
         chooser_type = "dmenu";
-        chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu";
+        chooser_cmd = "${inputs.noctalia.packages.${pkgs.system}.default}/bin/noctalia dmenu";
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
@@ -37,10 +37,10 @@
     };
 
     my-nixos.packages = {
-      inherit (pkgs) qalculate-gtk ncdu ddcutil imv mediainfo foot rofi zathura
+      inherit (pkgs) qalculate-gtk ncdu ddcutil imv mediainfo foot zathura
         cliphist wl-clipboard libnotify udiskie nwg-look glib
         gsettings-desktop-schemas adw-gtk3 gnome-themes-extra bibata-cursors
-        papirus-icon-theme;
+        papirus-icon-theme jq;
       inherit (pkgs.kdePackages) qt6ct;
     };
   };
