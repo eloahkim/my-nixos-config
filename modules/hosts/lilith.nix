@@ -40,6 +40,7 @@
       inputs.self.modules.nixos."services/fhs"
       inputs.self.modules.nixos."network/firewall"
       inputs.self.modules.nixos."network/avahi"
+      inputs.self.modules.nixos."virtualization/virt-manager"
 
       ({ config, pkgs, inputs, ... }:
         {
@@ -92,7 +93,7 @@
           users.users.kim = {
             isNormalUser = true;
             description = "Kim";
-            extraGroups = [ "networkmanager" "wheel" ];
+            extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
             packages = with pkgs; [
               #  thunderbird
             ];
