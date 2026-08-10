@@ -21,6 +21,7 @@
       inputs.self.modules.nixos."system/fonts"
       inputs.self.modules.nixos."system/nix-ld"
       inputs.self.modules.nixos."system/devenv"
+      inputs.self.modules.nixos."system/nh"
 
       # Fase 3 — aspectos de apps/
       inputs.self.modules.nixos."apps/git"
@@ -118,15 +119,9 @@
           # Enable the default ports on firewall.
           services.syncthing.openDefaultPorts = true;
 
-          # Coleta de lixo automática
-          nix = {
-            settings.auto-optimise-store = true;
-            gc = {
-              automatic = true;
-              dates = "weekly";
-              options = "--delete-older-than 7d";
-            };
-          };
+          # Coleta de lixo: responsabilidade do nh-clean (programs.nh.clean) —
+          # gerações antigas + GC do store semanal (--keep-since 7d --keep 3).
+          nix.settings.auto-optimise-store = true;
 
           # Habilita opções que ainda são experimentais (mais muito utilizadas) no NixOS
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
