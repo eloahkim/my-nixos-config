@@ -67,9 +67,15 @@ Para adicionar uma feature:
 
 ## Comandos
 
-- Rebuild: `sudo nixos-rebuild switch --flake ~/.nixos/my-nixos-config/.#lilith`
-- Atualizar inputs: `nix flake update`
-- Editar secrets: `cd secrets && sops secrets.yaml`
+- Rebuild/switch (com diff de closures): `nh os switch`
+  - Fallback clássico: `sudo nixos-rebuild switch --flake ~/.my-nixos-config/.#lilith`
+- Comparar gerações: `nh diff system-7 system-8`
+- Histórico de gerações: `nh log`
+- Atualizar inputs: `cd ~/.my-nixos-config && nix flake update`
+- Editar secrets: `cd ~/.my-nixos-config/secrets && sops secrets.yaml`
+
+> O `nh` resolve `.#lilith` sozinho via `NH_FLAKE` (exportado em
+> `/etc/set-environment` pelo módulo `programs.nh.flake`).
 
 ## Configs imperativas (fora do Nix)
 
@@ -88,3 +94,25 @@ Nem tudo vive no repositório — por decisão, alguns configs são gerenciados 
 - **Navidrome roda com `ProtectHome = false`** forçado, pois os dados vivem em
   `/home/kim/Dados_externos/Navidrome`.
 - **Noctalia usa o branch `cachix`** do flake upstream (binários vêm do cachix).
+
+## Stack de Nix
+
+Tecnologias do ecossistema Nix usadas nesta config:
+
+| Tecnologia | Uso |
+| --- | --- |
+| NixOS 26.05 (+ `nixos-unstable`) | sistema base e canal instável; branches pinados no `flake.lock` |
+| Nix Flakes | entradas/inputs reproduzíveis a partir do `flake.nix` |
+| flake-parts | framework de módulos (perSystem, outputs, sistemas) |
+| import-tree | padrão **Dendritic**: um aspecto = um arquivo em `modules/` |
+| home-manager | configs de `$HOME` declarativas, acopladas ao host via módulo NixOS |
+| sops-nix | segredos cifrados em `secrets/` |
+| disko | particionamento declarativo (`hardware/lilith-disko-config.nix`) |
+| nh | helper: `nh os switch` com diff de closures + timer `nh-clean` semanal |
+| nix-index-database | `command-not-found` com sugestões do store |
+| nix-ld | roda binários pré-compilados não-Nix |
+| nix-flatpak | flatpaks declarativos (`services/flatpak`) |
+| firefox-addons (NUR) | add-ons do Firefox via Nix |
+| nixos-hardware | perfil do Lenovo IdeaPad S145 |
+| mangowm | compositor Wayland |
+| noctalia | launcher/tema (branch `cachix`) |
