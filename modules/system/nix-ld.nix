@@ -59,6 +59,19 @@
         # áudio
         alsa-lib
         libpulseaudio
+        # áudio via PipeWire (libpipewire-0.3.so.0) — exigida por builders Electron
+        pipewire
+        # acesso gráfico/ATK (libatk, libatk-bridge, libatspi) — no 26.05 o
+        # at-spi2-core já engloba os aliases `atk`/`at-spi2-atk`
+        at-spi2-core
+        # impressão (libcups) e XML (libexpat) — exigidas por builders Electron
+        cups
+        expat
+        # mozilla NSS/nspr (libnspr4.so, libnss3.so, ...) — exigidas por builders Electron
+        nss
+        nspr
+        # device/udev (libudev.so.1) — fica no out do systemd
+        systemd
       ];
     };
   };
