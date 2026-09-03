@@ -40,7 +40,7 @@
       inherit (pkgs) qalculate-gtk ncdu ddcutil imv mediainfo foot zathura
         cliphist wl-clipboard libnotify udiskie nwg-look glib
         gsettings-desktop-schemas adw-gtk3 gnome-themes-extra bibata-cursors
-        papirus-icon-theme jq;
+        papirus-icon-theme jq grim slurp;
       inherit (pkgs.kdePackages) qt6ct;
     };
   };
