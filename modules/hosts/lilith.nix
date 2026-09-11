@@ -116,6 +116,7 @@
           # Allow unfree packages
           nixpkgs.config.allowUnfree = true;
 
+
           # Enable the default ports on firewall.
           services.syncthing.openDefaultPorts = true;
 
