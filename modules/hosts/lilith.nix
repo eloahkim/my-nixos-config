@@ -31,7 +31,8 @@
       inputs.self.modules.nixos."apps/ente-auth"
 
       # Fase 4 — aspectos de desktop/ (só os enable = true)
-      inputs.self.modules.nixos."desktop/mango"
+      #inputs.self.modules.nixos."desktop/mango"
+      inputs.self.modules.nixos."desktop/umbriel"
       inputs.self.modules.nixos."desktop/noctalia"
 
       # Fase 5 — aspectos de services/, network/, virtualization/ (só os enable = true)
