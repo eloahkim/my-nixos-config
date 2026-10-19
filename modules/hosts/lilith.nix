@@ -39,6 +39,7 @@
       inputs.self.modules.nixos."services/flatpak"
       inputs.self.modules.nixos."services/gaming"
       inputs.self.modules.nixos."services/navidrome"
+      inputs.self.modules.nixos."services/jellyfin"
       inputs.self.modules.nixos."services/podman"
       inputs.self.modules.nixos."services/fhs"
       inputs.self.modules.nixos."network/firewall"
