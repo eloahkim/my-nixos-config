@@ -32,7 +32,7 @@
     };
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
     mangowm = {
-      url = "github:mangowm/mango";
+      url = "github:mangowm/mango/0.18.2";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     umbriel.url = "github:noctalia-dev/umbriel/cachix";
