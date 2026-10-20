@@ -1,8 +1,12 @@
 { ... }:
 {
   flake.modules.nixos."desktop/gnome" = { pkgs, ... }: {
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
+    services.gnome = {
+      core-apps.enable = true;
+      core-developer-tools.enable = false;
+    };
 
     # GSConnect
     programs.kdeconnect = {
@@ -18,7 +22,7 @@
 
     my-nixos.packages = {
       inherit (pkgs.gnomeExtensions) appindicator "pop-shell" paperwm;
-      inherit (pkgs) gnome-tweaks gparted rhythmbox transmission_4-gtk;
+      inherit (pkgs) gnome-tweaks refine gparted rhythmbox transmission_4-gtk;
     };
   };
 }
