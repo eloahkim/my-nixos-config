@@ -143,6 +143,8 @@
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.backupFileExtension = "hm-backup";
+        home-manager.overwriteBackup = true;
         home-manager.users.kim = {
           home.username = "kim";
           home.homeDirectory = "/home/kim";
@@ -150,6 +152,8 @@
 
           imports = [
             inputs.self.modules.homeManager.base
+            # Fase 2 — aspectos home de system/
+            inputs.self.modules.homeManager."system/fonts"
             # Fase 3 — aspectos home de apps/
             inputs.self.modules.homeManager."apps/git"
             inputs.self.modules.homeManager."apps/aria2"
