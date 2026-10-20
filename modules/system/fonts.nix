@@ -16,13 +16,4 @@
       ];
     };
   };
-
-  flake.modules.homeManager."system/fonts" = { ... }: {
-    fonts.fontconfig = {
-      enable = true;
-      antialiasing = true;
-      hinting = "full";
-      subpixelRendering = "none";
-    };
-  };
 }

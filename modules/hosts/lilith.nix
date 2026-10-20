@@ -152,8 +152,6 @@
 
           imports = [
             inputs.self.modules.homeManager.base
-            # Fase 2 — aspectos home de system/
-            inputs.self.modules.homeManager."system/fonts"
             # Fase 3 — aspectos home de apps/
             inputs.self.modules.homeManager."apps/git"
             inputs.self.modules.homeManager."apps/aria2"
