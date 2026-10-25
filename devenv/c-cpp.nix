@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   packages = with pkgs; [
     clang
@@ -8,8 +8,10 @@
     cmake
     ninja
     pkg-config
+    bear
+    lldb
+  ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
     gdb
     valgrind
-    bear
   ];
 }

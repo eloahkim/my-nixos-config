@@ -7,5 +7,7 @@
     ruff
     black
     isort
+    python3Packages.debugpy
+    python3Packages.pytest
   ];
 }
