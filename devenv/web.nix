@@ -3,11 +3,14 @@
   packages = with pkgs; [
     nodejs_22
     pnpm
+    typescript
     typescript-language-server
+    vscode-langservers-extracted
     prettier
     eslint
     php
     phpPackages.composer
+    phpPackages.php-cs-fixer
     phpactor
     sqlite
     mariadb.client
