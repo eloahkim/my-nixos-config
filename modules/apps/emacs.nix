@@ -1,16 +1,15 @@
-{ pkgs, ... }:
+{ ... }:
 {
   flake.modules.nixos."apps/emacs" = { pkgs, ... }: {
-    services.emacs = {
-      enable = true;
-      package = pkgs.emacs-pgtk;
-      startWithGraphical = true;
-      defaultEditor = true;
+    # Emacs GUI standalone; sem daemon/emacsclient.
+    environment.sessionVariables = {
+      EDITOR = "emacs";
+      VISUAL = "emacs";
     };
 
     my-nixos.packages = {
       nixd = pkgs.nixd;
-      inherit (pkgs) gcc gnumake;
+      emacs = pkgs.emacs-pgtk;
     };
   };
 }

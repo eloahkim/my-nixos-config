@@ -85,6 +85,13 @@ Nem tudo vive no repositório — por decisão, alguns configs são gerenciados 
 - `~/.config/emacs/` — Emacs (`init.el` → `config.org` via org-babel);
 - Noctalia gera `~/.config/mango/noctalia.conf` e temas (css/cores) automaticamente.
 
+## Emacs portátil
+
+`~/.config/emacs` é independente de Nix/NixOS: usa `straight.el` com
+lockfile e encontra LSPs/formatadores no `PATH` carregado pelo `devenv`.
+O Emacs roda como GUI standalone (sem daemon/`emacsclient`). Instruções
+para macOS em [`docs/macos.md`](docs/macos.md).
+
 ## Pitfalls
 
 - **`git add` antes de rebuild/eval**: o flake usa o índice do git; arquivo novo

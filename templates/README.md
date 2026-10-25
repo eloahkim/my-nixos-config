@@ -23,10 +23,21 @@ O `devenv.lock` (pin dos inputs) é gerado na primeira avaliação.
 | ---------------- | ----------------------- | -------------------------------------------------------------------- |
 | Python (uv)      | `devenv/python.nix`     | uv, python3, basedpyright, ruff, black, isort, debugpy, pytest       |
 | Web (JS/PHP)     | `devenv/web.nix`        | nodejs_22, pnpm, typescript, TS LSP, vscode-langservers (HTML/CSS), prettier, eslint, php, composer, php-cs-fixer, phpactor, sqlite, mariadb-client + `services.mysql` + `processes.www` |
-| C/C++            | `devenv/c-cpp.nix`      | clang/clangd, gcc, cmake, ninja, pkg-config, bear, lldb; gdb/valgrind só no Linux |
+| C/C++            | `devenv/c-cpp.nix`      | clang/clangd, gcc, cmake, ninja, pkg-config, bear, lldb/lldb-dap; gdb/valgrind só no Linux |
 | Java (Maven)     | `devenv/java.nix`       | Temurin 21 (`JAVA_HOME`), Maven, jdt-language-server (jdtls p/ eglot)|
 | Go               | `devenv/go.nix`         | go, gopls, delve, gotools (goimports), golangci-lint                  |
 | SQL              | `devenv/sql.nix`        | sqls, sqlfluff, sqlite, postgresql (psql), mariadb-client (mysql)     |
+
+## Debug
+
+O Emacs usa `dape` para C/C++ (`gdb`/`lldb-dap`), Python (`debugpy`) e Go
+(`dlv`). Java continua com `jdb`; DAP em Java/JS/PHP é opcional. O GUD
+fica como fallback em `C-c C-g`.
+
+## macOS
+
+O mesmo `~/.config/emacs` roda no macOS; as diferenças de toolchain e
+debug estão em [`docs/macos.md`](../docs/macos.md).
 
 ## Workflow
 
