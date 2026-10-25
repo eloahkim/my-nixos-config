@@ -25,6 +25,8 @@ O `devenv.lock` (pin dos inputs) é gerado na primeira avaliação.
 | Web (JS/PHP)     | `devenv/web.nix`        | nodejs_22, pnpm, TS LSP, prettier, eslint, php, composer, phpactor, sqlite, mariadb-client + `services.mysql` + `processes.www` |
 | C/C++            | `devenv/c-cpp.nix`      | clang/clangd, gcc, cmake, ninja, pkg-config, bear, lldb; gdb/valgrind só no Linux |
 | Java (Maven)     | `devenv/java.nix`       | Temurin 21 (`JAVA_HOME`), Maven, jdt-language-server (jdtls p/ eglot)|
+| Go               | `devenv/go.nix`         | go, gopls, delve, gotools (goimports), golangci-lint                  |
+| SQL              | `devenv/sql.nix`        | sqls, sqlfluff, sqlite, postgresql (psql), mariadb-client (mysql)     |
 
 ## Workflow
 
