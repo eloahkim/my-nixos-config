@@ -4,15 +4,66 @@ Cada projeto usa um ambiente `devenv` (arquivos `devenv.nix` + `devenv.yaml`/
 `devenv.lock`), que recebe o *stack* via *import* de um módulo central deste
 repo. A CLI de `devenv` está instalada no sistema (módulo `system/devenv`).
 
-## Scaffold de um projeto
+## Criar um projeto
+
+O jeito recomendado é usar o script `scripts/dev-new`:
+
+```bash
+$ dev-new python meu-projeto
+$ dev-new java meu-projeto --package dev.kim.meu
+$ dev-new go meu-projeto
+$ dev-new c meu-projeto
+$ dev-new cpp meu-projeto --cmake
+$ dev-new web meu-projeto
+$ dev-new web meu-projeto --php
+$ dev-new sql meu-projeto --dialect sqlite
+```
+
+O script cria o diretório em `~/Projetos`, gera `devenv.nix` já com o
+import correto, copia `.envrc`/`devenv.yaml`/`.gitignore`, cria os arquivos
+iniciais da stack e roda `direnv allow`. No Python ele também roda
+`uv sync`; no SQLite, cria o `app.db`.
+
+Para adicionar o ambiente a um diretório que já existe:
+
+```bash
+$ cd ~/Projetos/projeto-existente
+$ dev-init python
+```
+
+O `dev-init` não sobrescreve arquivos existentes.
+
+Opções úteis:
+
+```text
+--here          usa o diretório atual
+--package NOME  pacote Java
+--module NOME   módulo Go
+--dialect SQL   dialeto do sqlfluff (sqlite, postgres, mysql)
+--php           adiciona exemplo PHP no template web
+--cmake         usa CMakeLists.txt em C/C++
+--git           inicializa um repositório Git
+--no-sync       não roda uv sync/sqlite3
+--no-direnv     não roda direnv allow
+--open          abre o arquivo principal no $EDITOR
+```
+
+Se o comando `dev-new` não estiver no `PATH`, crie os links:
+
+```bash
+ln -sfn ~/.my-nixos-config/scripts/dev-new ~/.local/bin/dev-new
+ln -sfn ~/.my-nixos-config/scripts/dev-init ~/.local/bin/dev-init
+```
+
+### Alternativa manual
 
 Copie os arquivos do template para a raiz do projeto:
 
 ```bash
 $ cp templates/devenv.nix templates/devenv.yaml templates/.envrc templates/.gitignore meu-projeto/
 $ cd meu-projeto
-$ nvim devenv.nix   # escolha o stack no `imports` (default = python)
-$ direnv allow      # carrega o ambiente
+$ $EDITOR devenv.nix   # escolha o stack no `imports` (default = python)
+$ direnv allow         # carrega o ambiente
 ```
 
 O `devenv.lock` (pin dos inputs) é gerado na primeira avaliação.

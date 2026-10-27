@@ -1,0 +1,5 @@
+# C++
+main
+*.o
+compile_commands.json
+build/

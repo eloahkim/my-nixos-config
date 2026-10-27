@@ -1,0 +1,9 @@
+{
+  "name": "example/@PROJECT_SLUG@",
+  "description": "Projeto PHP criado com dev-new",
+  "type": "project",
+  "require": {},
+  "scripts": {
+    "test": "php -l php/index.php"
+  }
+}

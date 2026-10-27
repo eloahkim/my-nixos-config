@@ -27,6 +27,13 @@ no macOS é o ambiente externo (Emacs, toolchains e adapters de debug).
 
 ## Projetos
 
+O script `scripts/dev-new` funciona igual no macOS e grava o caminho
+absoluto do repositório no `devenv.nix` gerado:
+
+```bash
+dev-new python meu-projeto
+```
+
 Os `devenv.nix` dos projetos podem importar o stack por caminho absoluto:
 
 ```nix

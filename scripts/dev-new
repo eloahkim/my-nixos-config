@@ -1,0 +1,377 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Resolve symlinks so the script can be linked into ~/.local/bin.
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+    DIR="$(cd -P -- "$(dirname -- "$SOURCE")" && pwd)"
+    SOURCE="$(readlink -- "$SOURCE")"
+    [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P -- "$(dirname -- "$SOURCE")" && pwd)"
+REPO_ROOT="$(cd -P -- "$SCRIPT_DIR/.." && pwd)"
+TEMPLATES="$REPO_ROOT/templates"
+PROJECTS_DIR="${DEV_NEW_PROJECTS_DIR:-$HOME/Projetos}"
+
+usage() {
+    cat <<'EOF'
+Uso:
+  dev-new [opções] <stack> [nome]
+  dev-new [opções]                 # modo interativo
+  dev-init [opções] <stack>        # adiciona o ambiente no diretório atual
+
+Stacks: python, java, go, c, cpp, web, sql
+
+Opções:
+  --here          usa o diretório atual
+  --package NOME  pacote Java (ex.: dev.kim.meu)
+  --module NOME   módulo Go (ex.: example.com/meu)
+  --dialect SQL   dialeto do sqlfluff (sqlite, postgres, mysql)
+  --php           adiciona o exemplo PHP no template web
+  --cmake         usa CMakeLists.txt em C/C++ (em vez de Makefile)
+  --git           inicializa um repositório Git
+  --no-sync       não roda uv sync/sqlite3
+  --no-direnv     não roda direnv allow
+  --open          abre o arquivo principal no $EDITOR
+  -h, --help      mostra esta ajuda
+EOF
+}
+
+die() {
+    printf 'erro: %s\n' "$*" >&2
+    exit 1
+}
+
+info() {
+    printf '%s\n' "$*" >&2
+}
+
+warn() {
+    printf 'aviso: %s\n' "$*" >&2
+}
+
+# dev-init é um symlink para dev-new.
+if [[ "$(basename -- "$0")" == "dev-init" ]]; then
+    set -- --here "$@"
+fi
+
+stack=""
+name=""
+here=0
+do_sync=1
+do_direnv=1
+git_init=0
+open_editor=0
+java_package=""
+java_package_path=""
+go_module=""
+sql_dialect="sqlite"
+with_php=0
+with_cmake=0
+positionals=()
+
+while (($#)); do
+    case "$1" in
+        --here) here=1; shift ;;
+        --no-sync) do_sync=0; shift ;;
+        --no-direnv) do_direnv=0; shift ;;
+        --git) git_init=1; shift ;;
+        --open) open_editor=1; shift ;;
+        --package)
+            [[ $# -ge 2 ]] || die "--package exige um valor"
+            java_package="$2"; shift 2 ;;
+        --module)
+            [[ $# -ge 2 ]] || die "--module exige um valor"
+            go_module="$2"; shift 2 ;;
+        --dialect)
+            [[ $# -ge 2 ]] || die "--dialect exige um valor"
+            sql_dialect="$2"; shift 2 ;;
+        --php) with_php=1; shift ;;
+        --cmake) with_cmake=1; shift ;;
+        -h|--help) usage; exit 0 ;;
+        --) shift; while (($#)); do positionals+=("$1"); shift; done ;;
+        -*) die "opção desconhecida: $1" ;;
+        *) positionals+=("$1"); shift ;;
+    esac
+done
+
+if ((${#positionals[@]} > 0)); then
+    stack="${positionals[0]}"
+fi
+if ((${#positionals[@]} > 1)); then
+    name="${positionals[1]}"
+fi
+if ((${#positionals[@]} > 2)); then
+    die "argumentos demais"
+fi
+
+case "$stack" in
+    py|python3) stack=python ;;
+    c++|cxx) stack=cpp ;;
+    python|java|go|c|cpp|web|sql) ;;
+    "") ;;
+    *) die "stack inválida: $stack" ;;
+esac
+
+if [[ -z "$stack" ]]; then
+    if [[ -t 0 ]]; then
+        info "Stacks: python java go c cpp web sql"
+        read -r -p "Stack: " stack
+        case "$stack" in
+            py|python3) stack=python ;;
+            c++|cxx) stack=cpp ;;
+        esac
+    else
+        die "informe a stack: dev-new <stack> <nome>"
+    fi
+fi
+
+case "$stack" in
+    python|java|go|c|cpp|web|sql) ;;
+    *) die "stack inválida: $stack" ;;
+esac
+
+if ((here)); then
+    project_dir="$PWD"
+    if [[ -z "$name" ]]; then
+        name="$(basename -- "$project_dir")"
+    fi
+else
+    if [[ -z "$name" ]]; then
+        if [[ -t 0 ]]; then
+            read -r -p "Nome do projeto: " name
+        else
+            die "informe o nome do projeto: dev-new $stack <nome>"
+        fi
+    fi
+    [[ "$name" =~ ^[A-Za-z0-9._-]+$ ]] ||
+        die "nome inválido; use letras, números, ponto, hífen ou sublinhado"
+    project_dir="$PROJECTS_DIR/$name"
+    if [[ -e "$project_dir" ]]; then
+        if [[ -n "$(find "$project_dir" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]]; then
+            die "diretório já existe e não está vazio: $project_dir (use dev-init)"
+        fi
+    fi
+    mkdir -p "$project_dir"
+fi
+
+[[ -n "$name" ]] || die "não foi possível determinar o nome do projeto"
+
+slug="$(printf '%s' "$name" |
+    tr '[:upper:]' '[:lower:]' |
+    sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
+[[ -n "$slug" ]] || die "nome do projeto gera um slug vazio"
+package_segment="${slug//-/_}"
+
+case "$stack" in
+    c|cpp) stack_module="c-cpp.nix" ;;
+    *) stack_module="$stack.nix" ;;
+esac
+
+case "$stack" in
+    java)
+        java_package="${java_package:-dev.kim.$package_segment}"
+        [[ "$java_package" =~ ^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$ ]] ||
+            die "pacote Java inválido: $java_package"
+        java_package_path="${java_package//./\/}"
+        ;;
+    go)
+        go_module="${go_module:-example.com/$slug}"
+        ;;
+    sql)
+        case "$sql_dialect" in
+            sqlite|postgres|mysql) ;;
+            *) die "dialeto SQL inválido: $sql_dialect" ;;
+        esac
+        ;;
+esac
+
+copy_if_missing() {
+    local src="$1"
+    local dest="$2"
+    if [[ -e "$dest" ]]; then
+        warn "mantido: ${dest#"$project_dir/"}"
+        return 0
+    fi
+    mkdir -p -- "$(dirname -- "$dest")"
+    cp -- "$src" "$dest"
+}
+
+sed_escape() {
+    printf '%s' "$1" | sed 's/[&|\\]/\\&/g'
+}
+
+render() {
+    sed \
+        -e "s|@PROJECT@|$(sed_escape "$name")|g" \
+        -e "s|@PROJECT_SLUG@|$(sed_escape "$slug")|g" \
+        -e "s|@PACKAGE@|$(sed_escape "$java_package")|g" \
+        -e "s|@PACKAGE_PATH@|$(sed_escape "$java_package_path")|g" \
+        -e "s|@MODULE@|$(sed_escape "$go_module")|g" \
+        -e "s|@DIALECT@|$(sed_escape "$sql_dialect")|g"
+}
+
+render_if_missing() {
+    local src="$1"
+    local dest="$2"
+    if [[ -e "$dest" ]]; then
+        warn "mantido: ${dest#"$project_dir/"}"
+        return 0
+    fi
+    mkdir -p -- "$(dirname -- "$dest")"
+    render <"$src" >"$dest"
+}
+
+info "Criando projeto $name ($stack) em $project_dir"
+
+# Arquivos comuns.
+copy_if_missing "$TEMPLATES/.envrc" "$project_dir/.envrc"
+copy_if_missing "$TEMPLATES/devenv.yaml" "$project_dir/devenv.yaml"
+
+if ! grep -q 'devenv direnvrc' "$project_dir/.envrc"; then
+    warn ".envrc não carrega 'devenv direnvrc'; adicione: eval \"\$(devenv direnvrc)\""
+fi
+
+if [[ -e "$project_dir/devenv.nix" ]]; then
+    warn "mantido: devenv.nix"
+else
+    cat >"$project_dir/devenv.nix" <<EOF
+{ ... }:
+{
+  imports = [
+    $REPO_ROOT/devenv/$stack_module
+  ];
+}
+EOF
+fi
+
+if [[ -e "$project_dir/.gitignore" ]]; then
+    warn "mantido: .gitignore"
+else
+    cat -- "$TEMPLATES/.gitignore" >"$project_dir/.gitignore"
+    if [[ -f "$TEMPLATES/$stack/.gitignore" ]]; then
+        printf '\n' >>"$project_dir/.gitignore"
+        render <"$TEMPLATES/$stack/.gitignore" >>"$project_dir/.gitignore"
+    fi
+fi
+
+main_file=""
+
+case "$stack" in
+    python)
+        render_if_missing "$TEMPLATES/python/pyproject.toml" "$project_dir/pyproject.toml"
+        copy_if_missing "$TEMPLATES/python/main.py" "$project_dir/main.py"
+        copy_if_missing "$TEMPLATES/python/test_main.py" "$project_dir/test_main.py"
+        main_file="$project_dir/main.py"
+        ;;
+    java)
+        render_if_missing "$TEMPLATES/java/pom.xml" "$project_dir/pom.xml"
+        render_if_missing "$TEMPLATES/java/Main.java" \
+            "$project_dir/src/main/java/$java_package_path/Main.java"
+        render_if_missing "$TEMPLATES/java/MainTest.java" \
+            "$project_dir/src/test/java/$java_package_path/MainTest.java"
+        main_file="$project_dir/src/main/java/$java_package_path/Main.java"
+        ;;
+    go)
+        render_if_missing "$TEMPLATES/go/go.mod" "$project_dir/go.mod"
+        copy_if_missing "$TEMPLATES/go/main.go" "$project_dir/main.go"
+        copy_if_missing "$TEMPLATES/go/main_test.go" "$project_dir/main_test.go"
+        main_file="$project_dir/main.go"
+        ;;
+    c|cpp)
+        if ((with_cmake)); then
+            render_if_missing "$TEMPLATES/$stack/CMakeLists.txt" "$project_dir/CMakeLists.txt"
+        else
+            copy_if_missing "$TEMPLATES/$stack/Makefile" "$project_dir/Makefile"
+        fi
+        copy_if_missing "$TEMPLATES/$stack/.clangd" "$project_dir/.clangd"
+        if [[ "$stack" == "c" ]]; then
+            render_if_missing "$TEMPLATES/c/main.c" "$project_dir/main.c"
+            main_file="$project_dir/main.c"
+        else
+            render_if_missing "$TEMPLATES/cpp/main.cpp" "$project_dir/main.cpp"
+            main_file="$project_dir/main.cpp"
+        fi
+        ;;
+    web)
+        render_if_missing "$TEMPLATES/web/package.json" "$project_dir/package.json"
+        copy_if_missing "$TEMPLATES/web/tsconfig.json" "$project_dir/tsconfig.json"
+        copy_if_missing "$TEMPLATES/web/server.mjs" "$project_dir/server.mjs"
+        render_if_missing "$TEMPLATES/web/src/index.html" "$project_dir/src/index.html"
+        copy_if_missing "$TEMPLATES/web/src/style.css" "$project_dir/src/style.css"
+        copy_if_missing "$TEMPLATES/web/src/main.ts" "$project_dir/src/main.ts"
+        copy_if_missing "$TEMPLATES/web/test/main.test.mjs" "$project_dir/test/main.test.mjs"
+        if ((with_php)); then
+            copy_if_missing "$TEMPLATES/web/php/index.php" "$project_dir/php/index.php"
+            copy_if_missing "$TEMPLATES/web/php/.php-cs-fixer.dist.php" \
+                "$project_dir/php/.php-cs-fixer.dist.php"
+            render_if_missing "$TEMPLATES/web/composer.json" "$project_dir/composer.json"
+        fi
+        main_file="$project_dir/src/main.ts"
+        ;;
+    sql)
+        render_if_missing "$TEMPLATES/sql/.sqlfluff" "$project_dir/.sqlfluff"
+        copy_if_missing "$TEMPLATES/sql/schema.sql" "$project_dir/schema.sql"
+        copy_if_missing "$TEMPLATES/sql/queries.sql" "$project_dir/queries.sql"
+        if [[ "$sql_dialect" == "sqlite" ]]; then
+            copy_if_missing "$TEMPLATES/sql/.dir-locals.el" "$project_dir/.dir-locals.el"
+        fi
+        main_file="$project_dir/schema.sql"
+        ;;
+esac
+
+if ((git_init)); then
+    (cd "$project_dir" && git init -q)
+fi
+
+direnv_status="não executado"
+if ((do_direnv)); then
+    if command -v direnv >/dev/null 2>&1; then
+        if (cd "$project_dir" && direnv allow); then
+            direnv_status="executado"
+        else
+            direnv_status="falhou"
+            warn "direnv allow falhou; rode manualmente: cd $project_dir && direnv allow"
+        fi
+    else
+        direnv_status="direnv não encontrado"
+        warn "direnv não encontrado; rode manualmente: cd $project_dir && direnv allow"
+    fi
+fi
+
+if ((do_sync)); then
+    case "$stack" in
+        python)
+            if [[ "$direnv_status" == "executado" ]] &&
+                (cd "$project_dir" && direnv exec . uv sync); then
+                :
+            else
+                warn "uv sync não rodou; depois rode: cd $project_dir && uv sync"
+            fi
+            ;;
+        sql)
+            if [[ "$sql_dialect" == "sqlite" ]] && [[ ! -f "$project_dir/app.db" ]]; then
+                if [[ "$direnv_status" == "executado" ]] &&
+                    (cd "$project_dir" && direnv exec . bash -c 'sqlite3 app.db < schema.sql'); then
+                    :
+                else
+                    warn "banco não criado; depois rode: cd $project_dir && sqlite3 app.db < schema.sql"
+                fi
+            fi
+            ;;
+    esac
+fi
+
+info "Projeto criado: $project_dir"
+info "Arquivo principal: $main_file"
+if [[ "$direnv_status" == "executado" ]]; then
+    info "Ambiente: direnv allow executado"
+else
+    info "Ambiente: $direnv_status; rode 'cd $project_dir && direnv allow'"
+fi
+
+printf '%s\n' "$main_file"
+
+if ((open_editor)); then
+    "${EDITOR:-emacs}" "$main_file"
+fi

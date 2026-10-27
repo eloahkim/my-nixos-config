@@ -26,6 +26,9 @@ modules/
   virtualization/             # virt-manager
 hardware/                     # lilith-hardware-configuration.nix, lilith-disko-config.nix
 secrets/                      # Secrets cifrados com sops (não abrir)
+scripts/                      # dev-new/dev-init (scaffold de projetos)
+templates/                    # arquivos iniciais por stack
+devenv/                       # stacks centrais (python, java, go, c-cpp, web, sql)
 ```
 
 ## Dendritic: uma feature = um arquivo (aspect)
@@ -91,6 +94,27 @@ Nem tudo vive no repositório — por decisão, alguns configs são gerenciados 
 lockfile e encontra LSPs/formatadores no `PATH` carregado pelo `devenv`.
 O Emacs roda como GUI standalone (sem daemon/`emacsclient`). Instruções
 para macOS em [`docs/macos.md`](docs/macos.md).
+
+## Criar projetos
+
+Use `dev-new` para criar um projeto com o stack e o ambiente `devenv` já
+configurados:
+
+```bash
+dev-new python meu-projeto
+dev-new java meu-projeto --package dev.kim.meu
+dev-new web meu-projeto --php
+```
+
+Para um diretório existente, use `dev-init`:
+
+```bash
+cd ~/Projetos/projeto-existente
+dev-init python
+```
+
+Os scripts ficam em `scripts/` e os templates em `templates/`. Veja
+[`templates/README.md`](templates/README.md) para as stacks e opções.
 
 ## Pitfalls
 
