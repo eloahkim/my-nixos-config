@@ -21,7 +21,7 @@ modules/
   apps/                       # Simple Aspects: git, vim, mpv, emacs, general
     browsers/                 # firefox, ungoogled-chromium, vivaldi
   desktop/                    # Multi Context Aspects: mango, plasma, niri, gnome, noctalia
-  services/                   # navidrome, jellyfin, podman, flatpak, fhs, gaming
+  services/                   # navidrome, jellyfin, podman, docker, flatpak, fhs, gaming
   network/                    # firewall, avahi
   virtualization/             # virt-manager
 hardware/                     # lilith-hardware-configuration.nix, lilith-disko-config.nix

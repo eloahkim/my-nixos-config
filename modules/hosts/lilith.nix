@@ -41,6 +41,7 @@
       inputs.self.modules.nixos."services/navidrome"
       inputs.self.modules.nixos."services/jellyfin"
       inputs.self.modules.nixos."services/podman"
+      inputs.self.modules.nixos."services/docker"
       inputs.self.modules.nixos."services/fhs"
       inputs.self.modules.nixos."network/firewall"
       inputs.self.modules.nixos."network/avahi"
@@ -97,7 +98,7 @@
           users.users.kim = {
             isNormalUser = true;
             description = "Kim";
-            extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+            extraGroups = [ "networkmanager" "wheel" "libvirtd" "docker" ];
             packages = with pkgs; [
               #  thunderbird
             ];
