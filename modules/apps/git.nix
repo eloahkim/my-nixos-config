@@ -8,8 +8,8 @@
     programs.git = {
       enable = true;
       settings.user = {
-        name = "eloahkim";
-        email = "kimeloah18@gmail.com";
+        name = "nicolasg87";
+        email = "nicolas_gabriel87@outlook.com";
       };
     };
   };

@@ -104,7 +104,7 @@ direnv reload     # reexporta o PATH (p/ LSPs/formatadores no Emacs)
 
 Depois do push, troque o caminho absoluto do `imports` por uma referência ao
 GitHub para tornar o `devenv.nix` portátil entre máquinas:
-`github:eloahkim/my-nixos-config/devenv/python.nix` (via input do `devenv.yaml`).
+`github:nicolasg87/my-nixos-config/devenv/python.nix` (via input do `devenv.yaml`).
 
 > Nota: os antigos devShells (`modules/dev/*.nix`, carregados com `use flake`)
 > foram substituídos por este fluxo devenv.

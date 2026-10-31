@@ -46,7 +46,7 @@ Ou, depois de publicar o repositório, por GitHub:
 # devenv.yaml
 inputs:
   my-nixos:
-    url: github:eloahkim/my-nixos-config
+    url: github:nicolasg87/my-nixos-config
 ```
 
 ```nix
