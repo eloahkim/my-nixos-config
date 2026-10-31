@@ -10,6 +10,8 @@
       open = "xdg-open";
       #nixos-upgrade = "./~/.nixos/nixos-upgrade.sh";
     };
+    programs.ssh.startAgent = true;
+    services.gnome.gcr-ssh-agent.enable = false; # Mango required
 
     # command-not-found → nix-locate com banco semanal da comunidade
     programs.nix-index-database.enable = true;
