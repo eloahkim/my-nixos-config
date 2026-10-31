@@ -30,9 +30,9 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia.url = "github:noctalia-dev/noctalia/v5.4.0";
+    noctalia.url = "github:noctalia-dev/noctalia/v5.4.1";
     mangowm = {
-      url = "github:mangowm/mango/0.18.3";
+      url = "github:mangowm/mango/0.18.4";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     umbriel.url = "github:noctalia-dev/umbriel/cachix";
